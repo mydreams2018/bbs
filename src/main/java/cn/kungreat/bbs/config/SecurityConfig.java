@@ -12,7 +12,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/favicon.ico","/css/**","/js/**");
+        web.ignoring().antMatchers("/favicon.ico","/css/**","/js/**","/index");
     }
 
     @Override
@@ -23,8 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Spring Security will use CORS configuration provided to Spring MVC
                 .cors().and().csrf().disable()
                 .authorizeRequests().anyRequest().authenticated().and()
-                .formLogin().loginPage("/index").permitAll();
-//                .loginProcessingUrl("/defaultLogin")
+                .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin");
 
     }
 }
