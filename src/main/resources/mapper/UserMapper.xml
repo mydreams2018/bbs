@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.bbs.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="phone" jdbcType="BIGINT" property="phone" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="is_vip" jdbcType="BIT" property="isVip" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.User" useGeneratedKeys="true">
+    insert into user (account, password, alias, 
+      phone, img, is_vip, state, 
+      email, description)
+    values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=BIGINT}, #{img,jdbcType=VARCHAR}, #{isVip,jdbcType=BIT}, #{state,jdbcType=TINYINT}, 
+      #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.bbs.domain.User">
+    update user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=BIGINT},
+      img = #{img,jdbcType=VARCHAR},
+      is_vip = #{isVip,jdbcType=BIT},
+      state = #{state,jdbcType=TINYINT},
+      email = #{email,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, account, password, alias, phone, img, is_vip, state, email, description
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, account, password, alias, phone, img, is_vip, state, email, description
+    from user
+  </select>
+</mapper>
