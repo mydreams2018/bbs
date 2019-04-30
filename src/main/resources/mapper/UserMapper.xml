@@ -13,10 +13,6 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.User" useGeneratedKeys="true">
     insert into user (account, password, alias, 
       phone, img, is_vip, state, 
@@ -38,10 +34,10 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
     select id, account, password, alias, phone, img, is_vip, state, email, description
     from user
-    where id = #{id,jdbcType=BIGINT}
+    where account = #{0}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, account, password, alias, phone, img, is_vip, state, email, description

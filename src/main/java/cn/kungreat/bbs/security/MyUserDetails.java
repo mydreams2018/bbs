@@ -1,0 +1,72 @@
+package cn.kungreat.bbs.security;
+
+import cn.kungreat.bbs.domain.User;
+import cn.kungreat.bbs.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+
+import java.util.*;
+
+@Component
+public class MyUserDetails implements UserDetailsService{
+    @Autowired
+    private UserService userService;
+
+    /*   return new org.springframework.security.core.userdetails.User("","",
+              AuthorityUtils.commaSeparatedStringToAuthorityList(""));
+              spring 提供的实现
+              第三个权限集合接收String  多个用,号分割
+               返回List<GrantedAuthority>
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userService.selectByPrimaryKey(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return new UserDetails() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                Set<MyRole> roles = new HashSet<>();
+                roles.add(new MyRole("ROLE_killer"));
+                return roles;
+            }
+
+            @Override
+            public String getPassword() {
+                return user==null?"":user.getPassword();
+            }
+
+            @Override
+            public String getUsername() {
+                return user==null?"":user.getAccount();
+            }
+
+            //下面4个返回 false 会抛异常 .可以用来作状态处理
+            @Override
+            public boolean isAccountNonExpired() {
+                return true;
+            }
+
+            @Override
+            public boolean isAccountNonLocked() {
+                return true;
+            }
+
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return true;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return true;
+            }
+        };
+    }
+}

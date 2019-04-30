@@ -1,0 +1,10 @@
+ var form = $("#register_user");
+            $.ajax({
+                url: form.attr("action"),
+                type: form.attr("method"),
+                data: form.serialize(),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                }
+            });

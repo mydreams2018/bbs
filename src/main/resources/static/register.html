@@ -11,25 +11,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        $(function(){
-            $("#join_as").bind("click",function () {
-                window.location.replace("/register.html");
-            });
-        });
+        function check(){
+            var pw1 = $("#inputPassword").val();
+            var pw2 = $("#PasswordRepeat").val();
+            var account = $("#inputAccount").val();
+            if(pw1.length < 6 || pw2.length < 6 || account.length < 6 ){
+                alert("用户-密码长度不能小于6");
+                return false;
+            }
+            if(pw1 != pw2){
+                alert("二次密码不一致");
+                return false;
+            }
+            return true;
+        };
     </script>
 </head>
 <body>
 
-    <form class="form-signin" action="/defaultLogin" method="post">
+    <form class="form-signin" action="/register" method="post" id="register_user" onsubmit="return check()">
         <div class="text-center mb-4">
             <img class="mb-4" src="/favicon.ico" alt="鲲大" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">鲲之大一锅炖不下</h1>
         </div>
-
-  <#--      <div class="form-label-group">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputEmail">Email address</label>
-        </div>-->
 
         <div class="form-label-group">
             <input type="text" id="inputAccount" class="form-control" placeholder="Account" required autofocus>
@@ -42,6 +46,11 @@
         </div>
 
         <div class="form-label-group">
+            <input type="password" id="PasswordRepeat" class="form-control" placeholder="PasswordRepeat" required>
+            <label for="PasswordRepeat">Password repeat</label>
+        </div>
+
+        <div class="form-label-group">
             <input type="text" id="inputImageCode" class="form-control" placeholder="Code" required>
             <label for="inputImageCode">Code</label>
         </div>
@@ -50,13 +59,7 @@
             <img src="/image"  class="img-fluid">
         </div>
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
-        <button class="btn btn-lg btn-primary btn-block" type="button" id="join_as">Join as</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register in</button>
         <p class="mt-5 mb-3 text-muted text-center">&copy; 2019-2022</p>
     </form>
 

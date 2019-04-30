@@ -1,0 +1,77 @@
+div class="container" 嵌套容器自适应 会存在左右 边距
+div class="container-fluid" 嵌套容器自适应full
+
+<div class="row no-gutters">          no-gutters没有间隔
+  <div class="col-8">col-8</div>      12网格系统
+  <div class="col-4">col-4</div>
+</div>
+
+<div class="row">
+  <div class="col-sm">图片</div>      默认一行二个图片   【col-sm  当前页面大小 低于 575px 分界点
+  <div class="col-sm">图片</div>      时一个col 作一行显示 这样做是在手机上显示的清楚一些】
+</div>
+
+img class="img-fluid"   图片自适应
+
+官方文档https://v4.bootcss.com/docs/4.0/layout/grid/#vertical-alignment
+
+<div class="container">
+  <div class="row align-items-*">          align-items对齐
+    <div class="col align-self-start">     align-self对齐
+      One of three columns
+    </div>
+    <div class="col align-self-center">
+      One of three columns
+    </div>
+    <div class="col align-self-end">
+      One of three columns
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-start">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-around">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+</div>
+
+[background-image:url('/i/eg_smile.gif');
+ background-repeat:no-repeat;
+ background-size:100% 100%;]

@@ -1,9 +1,10 @@
-package cn.kungreat.bbs.mapper;
+package cn.kungreat.bbs.service;
 
 import cn.kungreat.bbs.domain.User;
+
 import java.util.List;
 
-public interface UserMapper {
+public interface UserService {
 
     int insert(User record);
 
