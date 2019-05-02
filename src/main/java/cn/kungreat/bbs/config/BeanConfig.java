@@ -1,9 +1,11 @@
 package cn.kungreat.bbs.config;
 
+import cn.kungreat.bbs.security.ImageFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +20,15 @@ public class BeanConfig {
     public DruidDataSource initDruid(){
         DruidDataSource druidDataSource = new DruidDataSource();
         return druidDataSource;
+    }
+
+    @Bean
+    public FilterRegistrationBean loginFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new ImageFilter());
+        registration.addUrlPatterns("/register");
+        registration.setName("imgFilter");
+        return registration;
     }
 
     @Bean

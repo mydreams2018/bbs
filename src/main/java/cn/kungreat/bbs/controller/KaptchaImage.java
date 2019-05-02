@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Controller
 public class KaptchaImage {
@@ -23,7 +23,7 @@ public class KaptchaImage {
     public ModelAndView image(HttpServletRequest request, HttpServletResponse response){
         String code = defaultKaptcha.createText();
         request.getSession().setAttribute("image_code",code);
-        request.getSession().setAttribute("time", LocalDateTime.now());
+        request.getSession().setAttribute("time", new Date().getTime());
         BufferedImage image = defaultKaptcha.createImage(code);
         try {
             response.setContentType("image/jpeg");

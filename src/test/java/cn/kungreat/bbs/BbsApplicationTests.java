@@ -11,6 +11,9 @@ public class BbsApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		String s = "hasRole('测试')";
+		String substring = s.substring(9, s.length() - 2);
+		System.out.println(substring);
 	}
 
 }

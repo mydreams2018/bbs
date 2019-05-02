@@ -1,10 +1,10 @@
 package cn.kungreat.bbs.security;
 
 import cn.kungreat.bbs.domain.User;
+import cn.kungreat.bbs.service.PermissionService;
 import cn.kungreat.bbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +16,8 @@ import java.util.*;
 public class MyUserDetails implements UserDetailsService{
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private PermissionService permissionService;
     /*   return new org.springframework.security.core.userdetails.User("","",
               AuthorityUtils.commaSeparatedStringToAuthorityList(""));
               spring 提供的实现
@@ -33,7 +34,12 @@ public class MyUserDetails implements UserDetailsService{
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 Set<MyRole> roles = new HashSet<>();
-                roles.add(new MyRole("ROLE_killer"));
+                List<String> ps = permissionService.selectPermissions(username);
+                if(ps != null && ps.size()>0){
+                    for(int x=0;x< ps.size();x++){
+                        roles.add(new MyRole("ROLE_"+ps.get(x)));
+                    }
+                }
                 return roles;
             }
 

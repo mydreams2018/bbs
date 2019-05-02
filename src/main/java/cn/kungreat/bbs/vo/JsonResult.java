@@ -8,10 +8,11 @@ import lombok.Setter;
 public class JsonResult {
     private boolean result = true;
     private String message;
-
-    public JsonResult(boolean result, String message) {
+    private String path;
+    public JsonResult(boolean result, String message,String path) {
         this.result = result;
         this.message = message;
+        this.path = path;
     }
     public JsonResult(){}
 }

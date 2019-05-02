@@ -1,12 +1,12 @@
 package cn.kungreat.bbs.security;
 
 import cn.kungreat.bbs.vo.JsonResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -17,7 +17,8 @@ import java.io.IOException;
 @Component
 public class FaliureHandler implements AuthenticationFailureHandler {
     //重定向工具类
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+//    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private RequestCache requestCache = new HttpSessionRequestCache();
 
     /*
     *  spring 默认的处理器  SimpleUrlAuthenticationFailureHandler 可以继承 默认的处理器
@@ -25,18 +26,19 @@ public class FaliureHandler implements AuthenticationFailureHandler {
     *           也可自定意返回
      **/
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        String accept = request.getHeader("Accept");
+        SavedRequest cache = requestCache.getRequest(request, response);
+        String path = (cache==null?"/index":cache.getRedirectUrl());
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(JSON.toJSONString(new JsonResult(false,exception.getMessage(),path)));
+    /*    String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
             request.setAttribute("error",exception.getMessage());
             request.getRequestDispatcher("/login").forward(request,response);
         }else{
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(new JsonResult(false,exception.getMessage())));
-        }
+        }*/
     }
 }

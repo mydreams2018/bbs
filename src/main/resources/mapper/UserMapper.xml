@@ -12,35 +12,36 @@
     <result column="state" jdbcType="TINYINT" property="state" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="register_time"  property="registerTime" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.User" useGeneratedKeys="true">
     insert into user (account, password, alias, 
       phone, img, is_vip, state, 
-      email, description)
+      email, description, register_time)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
       #{phone,jdbcType=BIGINT}, #{img,jdbcType=VARCHAR}, #{isVip,jdbcType=BIT}, #{state,jdbcType=TINYINT}, 
-      #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+      #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{registerTime})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.bbs.domain.User">
     update user
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+    set password = #{password,jdbcType=VARCHAR},
       alias = #{alias,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=BIGINT},
       img = #{img,jdbcType=VARCHAR},
       is_vip = #{isVip,jdbcType=BIT},
       state = #{state,jdbcType=TINYINT},
       email = #{email,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      description = #{description,jdbcType=VARCHAR},
+      register_time = #{registerTime}
+    where account = #{account}
   </update>
   <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description
+    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time
     from user
     where account = #{0}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description
+    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time
     from user
   </select>
 </mapper>

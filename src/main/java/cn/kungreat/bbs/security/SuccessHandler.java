@@ -1,24 +1,24 @@
 package cn.kungreat.bbs.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.kungreat.bbs.vo.JsonResult;
+import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 @Component
 public class SuccessHandler implements AuthenticationSuccessHandler{
 
     //重定向工具类
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+//    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     //缓存上一次的重定向地址
     private RequestCache requestCache = new HttpSessionRequestCache();
 
@@ -27,17 +27,16 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
      *   在做一些判断 后调用 super(request,response,exception)返回默认流程处理
      *           也可自定意返回
      **/
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        SavedRequest cache = requestCache.getRequest(request, response);
+        String path = (cache==null?"/home.html":cache.getRedirectUrl());
         String accept = request.getHeader("Accept");
         if(accept.contains("text/html")){
-            response.sendRedirect("/hello");
+            response.sendRedirect(path);
         }else{
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(authentication));
+            response.getWriter().write(JSON.toJSONString(new JsonResult(true,authentication.getName(),path)));
         }
     }
 }
