@@ -43,4 +43,9 @@ public class UserServiceImpl implements UserService {
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public int updateImg(String account, String path) {
+        return userMapper.updateImg(account,path);
+    }
 }

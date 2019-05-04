@@ -13,4 +13,5 @@ public interface UserService {
     List<User> selectAll();
 
     int updateByPrimaryKey(User record);
+    int updateImg(String account,String path);
 }

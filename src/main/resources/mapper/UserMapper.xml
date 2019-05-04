@@ -24,18 +24,21 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.bbs.domain.User">
     update user
-    set password = #{password,jdbcType=VARCHAR},
-      alias = #{alias,jdbcType=VARCHAR},
+    set alias = #{alias,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=BIGINT},
-      img = #{img,jdbcType=VARCHAR},
-      is_vip = #{isVip,jdbcType=BIT},
-      state = #{state,jdbcType=TINYINT},
       email = #{email,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      register_time = #{registerTime}
+      description = #{description,jdbcType=VARCHAR}
     where account = #{account}
   </update>
-  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+
+    <update id="updateImg">
+      update user
+      set
+        img = #{path}
+      where account = #{account}
+    </update>
+
+    <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
     select id, account, password, alias, phone, img, is_vip, state, email, description, register_time
     from user
     where account = #{0}

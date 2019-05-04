@@ -46,7 +46,6 @@ public class ImageFilter implements Filter {
                 return ;
             }
         }
-        re.getSession().removeAttribute("image_code");
         chain.doFilter(request,response);
     }
 }

@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // 接口层要获取认证对象的时候  不要在这里放行 这里 不会封装认证对象过来
         web.ignoring().antMatchers("/favicon.ico","/register.html","/home.html",
-                "/address.html","/css/**","/js/**");
+                "/address.html","/userImg/**","/css/**","/js/**");
     }
 
     @Override
@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Spring Security will use CORS configuration provided to Spring MVC
                 .cors().and().csrf().disable()
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests().antMatchers("/index","/register","/image").permitAll()
+                .authorizeRequests().antMatchers("/index","/register",
+                "/image").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin")
                 .successHandler(successHandler)
