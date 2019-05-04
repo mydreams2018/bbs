@@ -36,13 +36,18 @@
             var phone = $("#phone").val();
             var alias = $("#alias").val();
             var area = $("#exampleFormControlTextarea1").val();
+            if(email.length==0 || phone.length ==0 || alias.length == 0){
+                alert("信息不能为空");
+                return;
+            }
             if(area.length > 156){
                 alert("个人简介长度不能超过156个字");
                 return;
             }
-            if(email.length==0 || phone.length ==0 || alias.length == 0){
-                alert("信息不能为空");
-                return;
+            var reg = new RegExp("^[0-9]*$");
+            if(!reg.test(phone)){
+                alert("电话只能是数字");
+                return ;
             }
             var form = $("#change-data");
             $.ajax({
