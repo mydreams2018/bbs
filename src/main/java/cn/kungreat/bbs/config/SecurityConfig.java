@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -26,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private SuccessHandler successHandler;
     @Autowired
     private FaliureHandler faliureHandler;
-
+    @Autowired
+    private PersistentTokenRepository tokenRepository;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetails).passwordEncoder(passwordEncoder);
@@ -56,7 +58,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/clearAll").clearAuthentication(true)
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID","remember-me")
-                .logoutSuccessUrl("/index");
+                .logoutSuccessUrl("/index")
+                .and()
+                .rememberMe().tokenRepository(tokenRepository)
+                .tokenValiditySeconds(60 * 6000)
+                .userDetailsService(myUserDetails);
 
     }
 }
