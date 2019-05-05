@@ -98,9 +98,6 @@
     </div>
 </header>
 
-
-
-
 <div class="container" style="padding-top: 50px">
 
     <div class="row" style="padding-bottom: 20px">

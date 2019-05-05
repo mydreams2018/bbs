@@ -3,6 +3,7 @@ package cn.kungreat.bbs.security;
 import cn.kungreat.bbs.vo.JsonResult;
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -29,6 +30,8 @@ public class SuccessHandler implements AuthenticationSuccessHandler{
      **/
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        SingleSession.single.put(SecurityContextHolder.getContext().getAuthentication().getName()
+                                ,request.getSession().getId()+":"+request.getSession().getCreationTime());
         SavedRequest cache = requestCache.getRequest(request, response);
         String path = (cache==null?"/home.html":cache.getRedirectUrl());
         String accept = request.getHeader("Accept");

@@ -1,9 +1,6 @@
 package cn.kungreat.bbs.config;
 
-import cn.kungreat.bbs.security.FaliureHandler;
-import cn.kungreat.bbs.security.ImageFilter;
-import cn.kungreat.bbs.security.MyUserDetails;
-import cn.kungreat.bbs.security.SuccessHandler;
+import cn.kungreat.bbs.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -49,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Spring Security will use CORS configuration provided to Spring MVC
                 .cors().and().csrf().disable()
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new SingleSessionFilter(), ExceptionTranslationFilter.class)
                 .authorizeRequests().antMatchers("/index","/register",
                 "/image").permitAll()
                 .anyRequest().authenticated().and()

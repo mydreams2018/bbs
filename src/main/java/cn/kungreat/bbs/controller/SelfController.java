@@ -36,7 +36,8 @@ public class SelfController {
     public JsonResult jsonResult(MultipartFile imgPath){
         JsonResult jsonResult = new JsonResult();
         try{
-            Assert.isTrue(imgPath.getSize() < 1048576,"上传文件不能大于1M");
+//            spring.servlet.multipart.max-file-size=1MB  默认的文件上传大小是1m
+//            Assert.isTrue(imgPath.getSize() < 1048576,"上传文件不能大于1M");
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
             Assert.isTrue("image/jpeg".equals(imgPath.getContentType())
                     ||"image/gif".equals(imgPath.getContentType()),"只支持jpg或gif格式的图片");
