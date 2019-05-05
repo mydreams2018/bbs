@@ -45,7 +45,7 @@ public class LoginController {
     }
 
 
-    @PreAuthorize("hasRole('测试')")
+    @PreAuthorize("hasRole('login-test')")
     @ResponseBody
     @RequestMapping(value = "/test")
     public String test(){

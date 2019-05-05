@@ -45,7 +45,7 @@ public class BeanConfig {
         properties.setProperty("kaptcha.border", "yes");
         properties.setProperty("kaptcha.border.color", "105,179,90");
         properties.setProperty("kaptcha.textproducer.font.color", "blue");
-        properties.setProperty("kaptcha.image.width", "360");
+        properties.setProperty("kaptcha.image.width", "453");
         properties.setProperty("kaptcha.image.height", "70");
         properties.setProperty("kaptcha.textproducer.font.size", "60");
         properties.setProperty("kaptcha.textproducer.char.length", "6");
