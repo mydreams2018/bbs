@@ -102,7 +102,7 @@
 
     <div class="row" style="padding-bottom: 20px">
         <div class="col-sm-4">
-            <img id="user-img" src="${(userDetail.img)!}" class="img-fluid" style="height: 200px;width:100%">
+            <img id="user-img" src="${(userDetail.img)!}" class="img-fluid rounded-circle" style="height: 200px;width:100%">
         </div>
     </div>
 
