@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // 接口层要获取认证对象的时候  不要在这里放行 这里 不会封装认证对象过来
         web.ignoring().antMatchers("/favicon.ico","/register.html","/home.html",
-                "/address.html","/userImg/**","/css/**","/js/**");
+                "/address.html","/out.html","/userImg/**","/css/**","/js/**");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/clearAll").clearAuthentication(true)
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID","remember-me")
-                .logoutSuccessUrl("/index")
+                .logoutSuccessUrl("/out.html")
                 .and()
                 .rememberMe().tokenRepository(tokenRepository)
                 .tokenValiditySeconds(60 * 6000)

@@ -13,7 +13,7 @@ import java.util.Map;
 public class ExceptionsController {
 
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public  Map<String,String> accessDeniedException(AccessDeniedException ex){
         HashMap<String, String> map = new HashMap<>();
         map.put("error",ex.getMessage());

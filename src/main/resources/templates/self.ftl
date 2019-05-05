@@ -78,6 +78,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/register.html" class="text-white">注册</a></li>
                         <li><a href="/index" class="text-white">登录</a></li>
+                        <li><a href="/clearAll" class="text-white">登出</a></li>
                         <li><a href="/address.html" class="text-white">联系我们</a></li>
                     </ul>
                 </div>
