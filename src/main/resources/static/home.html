@@ -15,6 +15,11 @@
     <script src="/js/jquery-3.4.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
+    <script type="text/javascript">
+        function jumpDetails(obj) {
+            window.location.replace(obj+".html");
+        }
+    </script>
 </head>
 <body>
 
@@ -103,7 +108,7 @@
 
             <div class="row">
                 <div class="card-deck">
-                    <div class="card">
+                    <div class="card" onclick="jumpDetails('java')">
                         <img class="card-img-top img-fluid" src="/userImg/fire.jpg" alt="Card favicon.ico cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>

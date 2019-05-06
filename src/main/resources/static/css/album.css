@@ -16,3 +16,11 @@ footer p {
 #loop-img{
     padding-top: 50px;
 }
+
+.pading30{
+    padding-top: 30px;
+}
+
+#text-right a {
+    text-align: center;
+}
