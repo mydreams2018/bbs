@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new SingleSessionFilter(), ExceptionTranslationFilter.class)
                 .authorizeRequests().antMatchers("/index","/register",
-                "/image").permitAll()
+                "/image","/postsCategory/list").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin")
                 .successHandler(successHandler)

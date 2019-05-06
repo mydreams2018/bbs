@@ -10,6 +10,7 @@
     <script src="/js/jquery-3.4.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
+    <script src="/js/java/home.js" ></script>
 </head>
 <body>
 
@@ -100,13 +101,18 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/home.html">主页</a>
                         </li>
+
+                        <select class="nav-item" id="select-type" onchange="selectChange(this)">
+                            <option value="0">所有主题</option>
+                        </select>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 排序
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">时间</a>
-                                <a class="dropdown-item" href="#">回复量</a>
+                                <a class="dropdown-item" href="javascript:orderDatas('time')">时间</a>
+                                <a class="dropdown-item" href="javascript:orderDatas('number')">回复量</a>
                             </div>
                         </li>
                     </ul>
