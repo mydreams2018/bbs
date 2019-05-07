@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.bbs.mapper.JavaPostsMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.JavaPosts">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="posts_name" jdbcType="VARCHAR" property="postsName" />
+    <result column="category" jdbcType="TINYINT" property="category" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="reply_time_end" jdbcType="TIMESTAMP" property="replyTimeEnd" />
+    <result column="reply_total" jdbcType="INTEGER" property="replyTotal" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from java_posts
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByAccount">
+    delete from java_posts
+    where account = #{0}
+  </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.JavaPosts" useGeneratedKeys="true">
+    insert into java_posts (account, posts_name, category, 
+      publish_time, reply_time_end, reply_total
+      )
+    values (#{account,jdbcType=VARCHAR}, #{postsName,jdbcType=VARCHAR}, #{category,jdbcType=TINYINT}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{replyTimeEnd,jdbcType=TIMESTAMP}, #{replyTotal,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.bbs.domain.JavaPosts">
+    update java_posts
+    set posts_name = #{postsName,jdbcType=VARCHAR},
+      category = #{category,jdbcType=TINYINT}
+    where id = #{id} AND account = #{account}
+  </update>
+
+  <update id="updateByReply">
+    update java_posts
+    set reply_time_end = #{replyTimeEnd,jdbcType=TIMESTAMP},
+      reply_total = #{replyTotal}
+    where id = #{id}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, account, posts_name, category, publish_time, reply_time_end, reply_total
+    from java_posts
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, account, posts_name, category, publish_time, reply_time_end, reply_total
+    from java_posts
+    <include refid="baseQuery"/>
+    ORDER BY ${orderField} DESC
+    limit #{start},#{pageSize}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Long">
+    select count(*) from java_posts
+    <include refid="baseQuery"/>
+  </select>
+
+  <sql id="baseQuery">
+    <where>
+      <if test="account !=null and account !='' ">
+        AND account = #{account}
+      </if>
+      <if test="category !=null and category !=0 ">
+         AND category = #{category}
+      </if>
+      <if test="searchKeyword !=null and searchKeyword !='' ">
+        AND posts_name LIKE concat("%",#{searchKeyword},"%")
+      </if>
+    </where>
+  </sql>
+</mapper>
