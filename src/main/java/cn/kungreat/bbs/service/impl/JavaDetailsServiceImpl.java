@@ -65,7 +65,9 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
     private void subtractReply(int i, Long postsId) {
         JavaPosts javaPosts = javaPostsMapper.selectByPrimaryKey(postsId);
         Assert.isTrue(javaPosts != null, "数据异常");
+        JavaDetails javaDetails = javaDetailsMapper.selectReplyTimeEnd(postsId);
         javaPosts.setReplyTotal(javaPosts.getReplyTotal() - i);
+        javaPosts.setReplyTimeEnd(javaDetails.getUpdateTime());
         javaPostsMapper.updateByReply(javaPosts);
     }
 

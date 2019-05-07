@@ -61,6 +61,12 @@
     WHERE id = #{0}
   </select>
 
+  <select id="selectReplyTimeEnd" resultMap="BaseResultMap">
+     select id, account, publish_time, update_time, detail_data,
+      posts_id, is_posts
+    from java_details where posts_id = #{0} ORDER BY update_time DESC  LIMIT 1
+  </select>
+
   <sql id="baseQuery">
     <where>
       <if test="postsId !=null">

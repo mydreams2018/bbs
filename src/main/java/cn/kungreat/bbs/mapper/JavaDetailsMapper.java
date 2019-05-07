@@ -12,6 +12,7 @@ public interface JavaDetailsMapper {
     int updateByPrimaryId(JavaDetails record);
     int updateForPosts(JavaDetails record);
     JavaDetails selectByPrimaryId(long PrimaryId);
+    JavaDetails selectReplyTimeEnd(Long postsId);
 
     long selectCount(JavaDetailsQuery query);
     List<JavaDetails> selectAll(JavaDetailsQuery query);
