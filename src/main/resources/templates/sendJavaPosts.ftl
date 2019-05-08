@@ -79,7 +79,7 @@
 <div class="container pading30">
     <div class="row justify-content-center">
         <div class="col-md">
-            <form id="send-java-posts" method="post" action="">
+            <form id="send-java-posts" method="post" action="/javaPosts/save">
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="send-main">主题</label>
