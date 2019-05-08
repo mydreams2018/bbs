@@ -6,6 +6,7 @@ import cn.kungreat.bbs.mapper.JavaDetailsMapper;
 import cn.kungreat.bbs.mapper.JavaPostsMapper;
 import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.service.JavaDetailsService;
+import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class JavaDetailsServiceImpl implements JavaDetailsService {
@@ -67,17 +70,47 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         Assert.isTrue(javaPosts != null, "数据异常");
         JavaDetails javaDetails = javaDetailsMapper.selectReplyTimeEnd(postsId);
         javaPosts.setReplyTotal(javaPosts.getReplyTotal() - i);
-        javaPosts.setReplyTimeEnd(javaDetails.getUpdateTime());
+        javaPosts.setReplyTimeEnd(javaDetails.getPublishTime());
         javaPostsMapper.updateByReply(javaPosts);
     }
 
-    @Override
+    @Transactional
     public int updateByPrimaryId(JavaDetails record) {
-        return 0;
+        Assert.isTrue(record.getId()!=null,"编辑的信息ID不能为空");
+        JavaDetails javaDetails = javaDetailsMapper.selectByPrimaryId(record.getId());
+        Assert.isTrue(javaDetails!=null,"查询数据失败");
+        String account = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(account.equals(javaDetails.getAccount()),
+                "没有权限编辑别人的贴子");
+        Assert.isTrue(!StringUtils.isEmpty(record.validMessage()),record.validMessage());
+        record.setUpdateTime(new Date());
+        return javaDetailsMapper.updateByPrimaryId(record);
     }
 
     @Override
-    public int updateForPosts(JavaDetails record) {
-        return 0;
+    public JavaDetails selectByPrimaryId(long PrimaryId) {
+        JavaDetails javaDetails = javaDetailsMapper.selectByPrimaryId(PrimaryId);
+        Assert.isTrue(javaDetails!=null,"查询数据为空");
+        String account = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(account.equals(javaDetails.getAccount()),
+                "没有权限查看别人的贴子");
+        return javaDetails;
     }
+
+    @Override
+    public QueryResult selectByPostsId(JavaDetailsQuery query) {
+        Assert.isTrue(!StringUtils.isEmpty(query.getPostsId().toString())
+                        || !StringUtils.isEmpty(query.getAccount()),"查询必要条件为空");
+        long count = javaDetailsMapper.selectCount(query);
+        List list  = Collections.emptyList();
+        if (count >  0){
+            list = javaDetailsMapper.selectAll(query);
+        }
+        query.setData(count,query.getPageSize(),query.getCurrentPage());
+        QueryResult  result = new QueryResult();
+        result.setDatas(list);
+        result.setPage(query);
+        return result;
+    }
+
 }
