@@ -7,9 +7,38 @@
     <title>Kun 鲲大</title>
     <link rel="stylesheet" href="/css/bootstarp/bootstrap.min.css" >
     <link href="/css/album.css" rel="stylesheet">
+    <link href="/summernote/summernote-bs4.css" rel="stylesheet">
     <script src="/js/jquery-3.4.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
+    <script src="/summernote/summernote-bs4.js" ></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 600
+            });
+        });
+        function sendPosts() {
+            var markupStr = $('#summernote').summernote('code');
+            if (markupStr.length > 3145720){
+                alert("贴子信息过大,请重新编辑");
+                return ;
+            }
+            var form = $("#send-java-posts");
+            $.ajax({
+                url: form.attr("action"),
+                type: form.attr("method"),
+                data: form.serialize(),
+                dataType: "json",
+                success: function (data) {
+
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+        };
+    </script>
 </head>
 <body>
 
@@ -46,6 +75,40 @@
         </div>
     </div>
 </header>
+
+<div class="container pading30">
+    <div class="row justify-content-center">
+        <div class="col-md">
+            <form id="send-java-posts" method="post" action="">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="send-main">主题</label>
+                        <input type="email" class="form-control" id="send-main" name="postsName">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="sendCategory">类型</label>
+                        <select class="form-control" id="sendCategory" name="category">
+                            <#if categorys??>
+                                <#if categorys?size &gt; 0>
+                                    <#list categorys as data>
+                                        <option value="${(data.id)!}">${(data.categoryName)!}</option>
+                                    </#list>
+                                <#else>
+
+                                </#if>
+                            </#if>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="summernote">最大内容3m内:图片过大请使用外部链接</label>
+                    <textarea class="form-control" id="summernote" name="detailData"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendPosts()">确定</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <footer class="text-muted">
     <div class="container">
