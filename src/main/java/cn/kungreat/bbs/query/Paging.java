@@ -6,7 +6,7 @@ import lombok.Getter;
 public class Paging {
 	private Long totalRow;			//读取到数据-的总行数
 	private Long totalPage;			//按分页计算的-总页数
-	private Long pageSize = 20L;			//每页显示的-行数
+	private Long pageSize = 10L;			//每页显示的-行数
 	private Long currentPage=1L;		//当前所在的页数
 	private Long lastPage;			//上一页
 	private Long nextPage;			//下一页

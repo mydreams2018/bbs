@@ -30,13 +30,22 @@
                 type: form.attr("method"),
                 data: form.serialize(),
                 dataType: "json",
-                success: function (data) {
-
+                xhrFields: {
+                    withCredentials: true
                 },
-                error: function (data) {
-                    alert(data);
+                crossDomain: true,
+                success: function (data) {
+                    if(data.result){
+                        alert(data.message);
+                        window.location.replace("/java.html");
+                    }else {
+                        alert(data.message);
+                    }
                 }
             });
+        };
+        function flushImg(obj) {
+            obj.src = "/image?time="+Math.random();
         };
     </script>
 </head>
@@ -100,6 +109,18 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputImageCode">Code</label>
+                        <input type="text" id="inputImageCode" name="code" class="form-control" placeholder="Code" required>
+                    </div>
+
+                    <div class="form-group col-md-8">
+                        <img src="/image" onclick="flushImg(this)" alt="鲲" id="image_flush" style="height: 76px" class="img-fluid form-control">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="summernote">最大内容3m内:图片过大请使用外部链接</label>
                     <textarea class="form-control" id="summernote" name="detailData"></textarea>

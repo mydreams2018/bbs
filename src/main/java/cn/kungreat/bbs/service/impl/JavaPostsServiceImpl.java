@@ -56,7 +56,7 @@ public class JavaPostsServiceImpl implements JavaPostsService {
 
     @Transactional
     public long insert(JavaPosts record) {
-        Assert.isTrue(!StringUtils.isEmpty(record.validMessage()),record.validMessage());
+        Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setAccount(account);
         Date date = new Date();
@@ -95,7 +95,7 @@ public class JavaPostsServiceImpl implements JavaPostsService {
     @Transactional
     public int updateByPrimaryKey(JavaPosts record) {
         Assert.isTrue(record.getId()!=null,"查询ID不能为空");
-        Assert.isTrue(!StringUtils.isEmpty(record.validMessage()),record.validMessage());
+        Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(account.equals(record.getAccount()),"用户信息不匹配");
         Date date = new Date();

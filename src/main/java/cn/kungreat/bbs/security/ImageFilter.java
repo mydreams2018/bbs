@@ -4,6 +4,7 @@ import cn.kungreat.bbs.vo.JsonResult;
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-public class ImageFilter implements Filter {
+public class ImageFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest re = ((HttpServletRequest)request);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        HttpServletRequest re = request;
         String requestURI = re.getRequestURI();
         if("/defaultLogin".equals(requestURI) || "/login".equals(requestURI)){
             //如果已经存在认证对象 时不要再次认证
@@ -29,7 +30,8 @@ public class ImageFilter implements Filter {
                 }
             }
         }
-        if("/defaultLogin".equals(requestURI) || "/register".equals(requestURI)){
+        if("/defaultLogin".equals(requestURI) || "/register".equals(requestURI)
+                ||"/login".equals(requestURI) || "/javaPosts/save".equals(requestURI)){
             Object code = re.getSession().getAttribute("image_code");
             long seconds = 90000;
             try{
@@ -46,6 +48,6 @@ public class ImageFilter implements Filter {
                 return ;
             }
         }
-        chain.doFilter(request,response);
+        filterChain.doFilter(request,response);
     }
 }

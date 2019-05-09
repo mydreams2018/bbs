@@ -21,6 +21,10 @@
                     data: data,
                     processData: false,
                     contentType: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     success: function (data) {
                         if(data.result){
                             $("#user-img").attr("src",data.path);
@@ -55,6 +59,10 @@
                 type: form.attr("method"),
                 data: form.serialize(),
                 dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: function (data) {
                     alert(data.message);
                 }

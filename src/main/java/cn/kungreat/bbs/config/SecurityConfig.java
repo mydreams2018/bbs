@@ -1,6 +1,7 @@
 package cn.kungreat.bbs.config;
 
 import cn.kungreat.bbs.security.*;
+import cn.kungreat.bbs.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -44,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // 接口层要获取认证对象的时候  不要在这里放行 这里 不会封装认证对象过来
         web.ignoring().antMatchers("/favicon.ico","/register.html","/home.html",
-                "/address.html","/out.html","/java.html","/userImg/**","/css/**","/js/**");
+                "/address.html","/out.html","/java.html","/image",
+                "/index","/register", "/postsCategory/list","/javaPosts/selectAll","/userImg/**","/css/**","/js/**");
     }
 
     @Override
@@ -56,8 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and().csrf().disable()
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new SingleSessionFilter(), ExceptionTranslationFilter.class)
-                .authorizeRequests().antMatchers("/index","/register",
-                "/image","/postsCategory/list").permitAll()
+                .authorizeRequests()
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/index").loginProcessingUrl("/defaultLogin")
                 .successHandler(successHandler)
@@ -74,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 SingleSession.single.put(SecurityContextHolder.getContext().getAuthentication().getName()
                         ,request.getSession().getId()+":"+request.getSession().getCreationTime());
+                UserContext.setCurrentName(SecurityContextHolder.getContext().getAuthentication().getName());
             }
         });
 
