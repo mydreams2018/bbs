@@ -1,9 +1,11 @@
 package cn.kungreat.bbs.config;
 
+import cn.kungreat.bbs.filter.AnotherImageFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +47,15 @@ public class BeanConfig {
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
+    }
+
+    @Bean
+    public FilterRegistrationBean EKPSSOClientAuthentication() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new AnotherImageFilter());
+        registration.addUrlPatterns("/register");
+        registration.setName("anotherImageFilter");
+        return registration;
     }
 
     @Bean
