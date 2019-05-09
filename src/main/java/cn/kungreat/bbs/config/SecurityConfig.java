@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/clearAll").clearAuthentication(true)
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID","remember-me")
-                .logoutSuccessUrl("/out.html")
+                .logoutSuccessHandler(new LogoutHandler())
                 .and()
                 .rememberMe().tokenRepository(tokenRepository)
                 .tokenValiditySeconds(60 * 6000)
