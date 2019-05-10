@@ -1,3 +1,7 @@
+var orderField = "publish_time";
+var category = 0;
+var searchKeyword = "";
+
 $(function(){
 
     $.ajax({
@@ -59,7 +63,7 @@ $(function(){
     });
 
 });
-
+//页面重载时
 function getDatas(data) {
     if(data.datas.length > 0){
         var a = $("#newPosts");
@@ -112,6 +116,8 @@ function getDatas(data) {
     }
 };
 
+// to do
+
 function pageChange(obj) {
     var currentPage = $("#"+obj).attr("data-crt");
     if(currentPage){
@@ -119,7 +125,11 @@ function pageChange(obj) {
             url: "/javaPosts/selectAll",
             type: "post",
             dataType: "json",
-            data: {"currentPage":currentPage},
+            data: {"currentPage":currentPage,
+                    "orderField":orderField,
+                    "category":category,
+                    "searchKeyword":searchKeyword
+            },
             beforeSend: function () {
                 $("#postsDatas").empty();
                 $("#text-right").empty();
@@ -129,55 +139,88 @@ function pageChange(obj) {
                 $("#page-top").parent("li").removeClass("disabled");
             },
             success: function (data) {
-                if(data.datas.length > 0){
-                    var datas = data.datas;
-                    for (x = 0; x < datas.length; x++){
-                        var posts = $("#data-a-colne").clone();
-                        var userMessage = $("#data-a-colne").clone();
-                        posts.prop("href", "http://www.w3school.com.cn");
-                        posts.prop("title", datas[x].postsName);
-                        posts.text(datas[x].postsName.substring(0, 18));
-                        userMessage.prop("href", "http://www.w3school.com.cn");
-                        userMessage.prop("title", datas[x].postsName);
-                        userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
-                        $("#postsDatas").append(posts);
-                        $("#text-right").append(userMessage);
-                    }
-                }
-                if(data.page){
-                    var page = data.page;
-                    $("#page-last").attr("data-crt",page.lastPage);
-                    $("#page-next").attr("data-crt",page.nextPage);
-                    $("#page-end").attr("data-crt",page.endPage);
-                    $("#current-page").text("当前页:"+page.currentPage);
-                    $("#total-page").text("总共页:"+page.totalPage);
-                    if(page.currentPage == page.lastPage){
-                        $("#page-last").parent("li").addClass("disabled");
-                    }
-                    if(page.currentPage == page.nextPage){
-                        $("#page-next").parent("li").addClass("disabled");
-                    }
-                    if(page.currentPage == page.endPage){
-                        $("#page-end").parent("li").addClass("disabled");
-                    }
-                    if(page.currentPage == 1){
-                        $("#page-top").parent("li").addClass("disabled");
-                    }
-                }
+                getCurrentDatas(data);
             }
         });
     }
 };
 
 function orderDatas(obj) {
-    var category = $("#select-type").val();
-    alert(category);
+    orderField = obj;
+    sendAjax();
 };
 
 
 function selectChange(obj) {
-
+    category = $(obj).val();
+    sendAjax();
 };
+
+function searchClick() {
+    searchKeyword = $("#searchData").val();
+    sendAjax();
+}
+
+function sendAjax() {
+    $.ajax({
+        url: "/javaPosts/selectAll",
+        type: "post",
+        dataType: "json",
+        data: { "orderField":orderField,
+            "category":category,
+            "searchKeyword":searchKeyword
+        },
+        beforeSend: function () {
+            $("#postsDatas").empty();
+            $("#text-right").empty();
+            $("#page-last").parent("li").removeClass("disabled");
+            $("#page-next").parent("li").removeClass("disabled");
+            $("#page-end").parent("li").removeClass("disabled");
+            $("#page-top").parent("li").removeClass("disabled");
+        },
+        success: function (data) {
+            getCurrentDatas(data);
+        }
+    });
+}
+
+function getCurrentDatas(data) {
+    if(data.datas.length > 0){
+        var datas = data.datas;
+        for (x = 0; x < datas.length; x++){
+            var posts = $("#data-a-colne").clone();
+            var userMessage = $("#data-a-colne").clone();
+            posts.prop("href", "http://www.w3school.com.cn");
+            posts.prop("title", datas[x].postsName);
+            posts.text(datas[x].postsName.substring(0, 18));
+            userMessage.prop("href", "http://www.w3school.com.cn");
+            userMessage.prop("title", datas[x].postsName);
+            userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
+            $("#postsDatas").append(posts);
+            $("#text-right").append(userMessage);
+        }
+    }
+    if(data.page){
+        var page = data.page;
+        $("#page-last").attr("data-crt",page.lastPage);
+        $("#page-next").attr("data-crt",page.nextPage);
+        $("#page-end").attr("data-crt",page.endPage);
+        $("#current-page").text("当前页:"+page.currentPage);
+        $("#total-page").text("总共页:"+page.totalPage);
+        if(page.currentPage == page.lastPage){
+            $("#page-last").parent("li").addClass("disabled");
+        }
+        if(page.currentPage == page.nextPage){
+            $("#page-next").parent("li").addClass("disabled");
+        }
+        if(page.currentPage == page.endPage){
+            $("#page-end").parent("li").addClass("disabled");
+        }
+        if(page.currentPage == 1){
+            $("#page-top").parent("li").addClass("disabled");
+        }
+    }
+}
 
 Date.prototype.format = function(fmt) {
     var o = {
