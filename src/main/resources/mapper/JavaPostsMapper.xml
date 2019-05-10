@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.kungreat.bbs.mapper.JavaPostsMapper">
   <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.JavaPosts">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="posts_name" jdbcType="VARCHAR" property="postsName" />
-    <result column="category" jdbcType="TINYINT" property="category" />
-    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
-    <result column="reply_time_end" jdbcType="TIMESTAMP" property="replyTimeEnd" />
-    <result column="reply_total" jdbcType="INTEGER" property="replyTotal" />
+    <id column="id" property="id" />
+    <result column="account" property="account" />
+    <result column="posts_name" property="postsName" />
+    <result column="category" property="category" />
+    <result column="publish_time" property="publishTime" />
+    <result column="reply_time_end" property="replyTimeEnd" />
+    <result column="reply_total" property="replyTotal" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from java_posts

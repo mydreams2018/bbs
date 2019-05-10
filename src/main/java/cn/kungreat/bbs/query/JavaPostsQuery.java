@@ -12,7 +12,7 @@ public class JavaPostsQuery extends Paging{
     private String account = null;
 
     public void setOrderField(String orderField) {
-        if("reply_total".equals(orderField)){
+        if("reply_total".equals(orderField) || "reply_time_end".equals(orderField)){
             this.orderField = orderField;
         }
     }

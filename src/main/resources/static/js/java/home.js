@@ -37,6 +37,27 @@ $(function(){
         }
     });
 
+    $.ajax({
+        url: "/javaPosts/selectAll",
+        type: "post",
+        dataType: "json",
+        data: {"orderField":"reply_time_end","pageSize":8},
+        success: function (data) {
+            if(data.datas.length > 0){
+                var a = $("#newReply");
+                var datas = data.datas;
+                for (x = 0; x < datas.length; x++){
+                    if(x < 8){
+                        a =  a.next("a");
+                        a.prop("href","http://www.w3school.com.cn");
+                        a.prop("title",datas[x].postsName);
+                        a.text(datas[x].postsName.substring(0,18));
+                    }
+                }
+            }
+        }
+    });
+
 });
 
 function getDatas(data) {
