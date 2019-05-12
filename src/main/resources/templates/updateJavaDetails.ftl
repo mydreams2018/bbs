@@ -76,6 +76,7 @@
                         <li><a href="/index" class="text-white">登录</a></li>
                         <li><a href="/clearAll" class="text-white">登出</a></li>
                         <li><a href="/address.html" class="text-white">联系我们</a></li>
+                        <li><a href="/home.html" class="text-white">首页</a></li>
                     </ul>
                 </div>
             </div>
