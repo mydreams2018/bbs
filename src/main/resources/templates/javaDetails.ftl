@@ -217,8 +217,8 @@
                                 <a href="javascript:oppose(${(data.id)!})" class="card-link">
                                     踩:${(records[data_index][1].total)!0}
                                 </a>
-                                <button  class="card-link btn-primary" data-sustain="${(records[data_index][1].account)!'无'}"
-                                         data-oppose="${(records[data_index][0].account)!'无'}" onclick="showModal(this)" >查</button>
+                                <button  class="card-link btn-primary" data-sustain="${(records[data_index][0].account)!'无'}"
+                                         data-oppose="${(records[data_index][1].account)!'无'}" onclick="showModal(this)" >查</button>
 
                                 &nbsp; &nbsp; &nbsp;
                                 发布时间:${(data.publishTime)?string("yyyy-MM-dd HH:mm:ss")}

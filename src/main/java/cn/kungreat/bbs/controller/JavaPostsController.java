@@ -67,7 +67,7 @@ public class JavaPostsController {
             javaDetailsQuery.setCurrentPage(currentPage);
             QueryResult queryResult = javaDetailsService.selectByPostsId(javaDetailsQuery);
             model.addAttribute("details",queryResult);
-            model.addAttribute("records",javaDetailsRecordService.selectByAccounts(queryResult.getDatas()));
+            model.addAttribute("records",javaDetailsRecordService.selectByDetails(queryResult.getDatas()));
             model.addAttribute("postsUsers",userService.selectByAccounts(queryResult.getDatas()));
             return "javaDetails";
         }

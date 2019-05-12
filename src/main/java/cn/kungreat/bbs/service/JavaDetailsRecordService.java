@@ -9,5 +9,5 @@ public interface JavaDetailsRecordService {
     int insert(JavaDetailsRecord record);
     List<JavaDetailsRecord> countRecord(Long detailsId);
 
-    List<List<JavaDetailsRecord>> selectByAccounts(List<JavaDetails> details);
+    List<List<JavaDetailsRecord>> selectByDetails(List<JavaDetails> details);
 }

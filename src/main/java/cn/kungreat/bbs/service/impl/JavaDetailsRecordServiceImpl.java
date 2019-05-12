@@ -34,7 +34,7 @@ public class JavaDetailsRecordServiceImpl implements JavaDetailsRecordService {
     }
 
     @Override
-    public List<List<JavaDetailsRecord>> selectByAccounts(List<JavaDetails> details) {
+    public List<List<JavaDetailsRecord>> selectByDetails(List<JavaDetails> details) {
         List<List<JavaDetailsRecord>> lists = new ArrayList<>();
         for(int x=0; x<details.size();x++){
             lists.add(countRecord(details.get(x).getId()));
