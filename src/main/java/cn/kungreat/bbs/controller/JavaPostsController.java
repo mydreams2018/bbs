@@ -4,10 +4,7 @@ import cn.kungreat.bbs.domain.JavaPosts;
 import cn.kungreat.bbs.mapper.JavaPostsMapper;
 import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.query.JavaPostsQuery;
-import cn.kungreat.bbs.service.JavaDetailsService;
-import cn.kungreat.bbs.service.JavaPostsService;
-import cn.kungreat.bbs.service.PostsCategoryService;
-import cn.kungreat.bbs.service.UserService;
+import cn.kungreat.bbs.service.*;
 import cn.kungreat.bbs.vo.JsonResult;
 import cn.kungreat.bbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class JavaPostsController {
     private JavaDetailsService javaDetailsService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JavaDetailsRecordService javaDetailsRecordService;
 
     @RequestMapping
     public String posts(Model model){
@@ -68,6 +67,7 @@ public class JavaPostsController {
             javaDetailsQuery.setCurrentPage(currentPage);
             QueryResult queryResult = javaDetailsService.selectByPostsId(javaDetailsQuery);
             model.addAttribute("details",queryResult);
+            model.addAttribute("records",javaDetailsRecordService.selectByAccounts(queryResult.getDatas()));
             model.addAttribute("postsUsers",userService.selectByAccounts(queryResult.getDatas()));
             return "javaDetails";
         }

@@ -41,7 +41,7 @@
             }
         });
         var postsId = ${(posts.id)!};
-
+        var sessionUser = "${(Session.KUN_CURRENT_NAME)!0}";
         function editPosts(obj){
             window.location.replace("/javaDetails/update?id="+obj);
         };
@@ -84,6 +84,69 @@
                     }
                 }
             });
+        };
+
+        function sustain(obj) {
+            if(sessionUser == 0){
+                alert("请先登录");
+                return ;
+            }
+            $.ajax({
+                url: "/javaDetailsRecord/save",
+                type: "post",
+                data: {
+                    "state":1,
+                    "javaDetailsId":obj
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.result){
+                        alert(data.message);
+                        window.location.reload();
+                    }else {
+                        alert(data.message);
+                    }
+                },
+                error:function(data){
+                    alert("请先登录");
+                }
+            });
+
+        };
+        function oppose(obj) {
+            if(sessionUser == 0){
+                alert("请先登录");
+                return ;
+            }
+            $.ajax({
+                url: "/javaDetailsRecord/save",
+                type: "post",
+                data: {
+                    "state":0,
+                    "javaDetailsId":obj
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.result){
+                        alert(data.message);
+                        window.location.reload();
+                    }else {
+                        alert(data.message);
+                    }
+                },
+                error:function(){
+                    alert("请先登录");
+                }
+            });
+
+        };
+        
+        function showModal(obj) {
+            var oppose =$(obj).attr("data-oppose");
+            var sustain =$(obj).attr("data-sustain");
+            $("#oppose-user").text('踩的人:'+oppose);
+            $("#sustain-user").text('顶的人:'+sustain);
+            $("#modal-show").modal('show');
         };
     </script>
 </head>
@@ -147,6 +210,17 @@
                         </div>
                         <div class="card-footer text-right">
                             <small class="text-muted">
+
+                                <a href="javascript:sustain(${(data.id)!})" class="card-link">
+                                    顶:${(records[data_index][0].total)!0}
+                                </a>
+                                <a href="javascript:oppose(${(data.id)!})" class="card-link">
+                                    踩:${(records[data_index][1].total)!0}
+                                </a>
+                                <button  class="card-link btn-primary" data-sustain="${(records[data_index][1].account)!'无'}"
+                                         data-oppose="${(records[data_index][0].account)!'无'}" onclick="showModal(this)" >查</button>
+
+                                &nbsp; &nbsp; &nbsp;
                                 发布时间:${(data.publishTime)?string("yyyy-MM-dd HH:mm:ss")}
                                 &nbsp; &nbsp; &nbsp;
                                 <#if (data.updateTime)??>
@@ -196,6 +270,27 @@
         登录后发贴: <a href="/index" class="text-white">登录</a>
     </div>
 </#if>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-show" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">顶:踩</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="sustain-user"></div>
+                <div id="oppose-user"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row pading30 justify-content-end">
     <div class="col-md-6">
