@@ -1,5 +1,6 @@
 package cn.kungreat.bbs.service.impl;
 
+import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.User;
 import cn.kungreat.bbs.mapper.UserMapper;
 import cn.kungreat.bbs.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +39,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> selectAll() {
         return userMapper.selectAll();
+    }
+
+    @Override
+    public List<User> selectByAccounts(List<JavaDetails> accounts) {
+        List<User> act = new ArrayList<>();
+        for(int x = 0;x < accounts.size(); x++){
+            act.add(userMapper.selectByPrimaryKey(accounts.get(x).getAccount()));
+        }
+        return act;
     }
 
     @Override

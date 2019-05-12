@@ -53,7 +53,7 @@ $(function(){
                 for (x = 0; x < datas.length; x++){
                     if(x < 8){
                         a =  a.next("a");
-                        a.prop("href","http://www.w3school.com.cn");
+                        a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                         a.prop("title",datas[x].postsName);
                         a.text(datas[x].postsName.substring(0,18));
                     }
@@ -71,22 +71,22 @@ function getDatas(data) {
         for (x = 0; x < datas.length; x++){
             if(x < 8){
                 a =  a.next("a");
-                a.prop("href","http://www.w3school.com.cn");
+                a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                 a.prop("title",datas[x].postsName);
                 a.text(datas[x].postsName.substring(0,18));
 
                 $("#postsDatas").append($(a).clone());
                 var userMessage =  $(a).clone();
-                userMessage.prop("href","http://www.w3school.com.cn");
+                userMessage.prop("href","#");
                 userMessage.text(datas[x].account +': '+ new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
                 $("#text-right").append(userMessage);
             }else {
                 var posts = $("#data-a-colne").clone();
                 var userMessage = $("#data-a-colne").clone();
-                posts.prop("href", "http://www.w3school.com.cn");
+                posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
                 posts.prop("title", datas[x].postsName);
                 posts.text(datas[x].postsName.substring(0, 18));
-                userMessage.prop("href", "http://www.w3school.com.cn");
+                userMessage.prop("href", "#");
                 userMessage.prop("title", datas[x].postsName);
                 userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
                 $("#postsDatas").append(posts);
@@ -190,10 +190,10 @@ function getCurrentDatas(data) {
         for (x = 0; x < datas.length; x++){
             var posts = $("#data-a-colne").clone();
             var userMessage = $("#data-a-colne").clone();
-            posts.prop("href", "http://www.w3school.com.cn");
+            posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
             posts.prop("title", datas[x].postsName);
             posts.text(datas[x].postsName.substring(0, 18));
-            userMessage.prop("href", "http://www.w3school.com.cn");
+            userMessage.prop("href", "#");
             userMessage.prop("title", datas[x].postsName);
             userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
             $("#postsDatas").append(posts);

@@ -30,8 +30,10 @@ public class ImageFilter extends OncePerRequestFilter {
                 }
             }
         }
-        if("/defaultLogin".equals(requestURI)
-                ||"/login".equals(requestURI) || "/javaPosts/save".equals(requestURI)){
+        if("/defaultLogin".equals(requestURI) || "/javaDetails/updateSave".equals(requestURI)
+                ||"/login".equals(requestURI) || "/javaPosts/save".equals(requestURI) ||
+                "/javaDetails/save".equals(requestURI) || "/javaPosts/updatePosts".equals(requestURI)
+        ){
             Object code = re.getSession().getAttribute("image_code");
             long seconds = 90000;
             try{

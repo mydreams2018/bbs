@@ -12,7 +12,7 @@ public interface UserMapper {
     User selectByPrimaryKey(String account);
 
     List<User> selectAll();
-
+    List<User> selectByAccounts(@Param("acts") List<String> acts);
     int updateByPrimaryKey(User record);
 
     int updateImg(@Param("account") String account, @Param("path") String path);

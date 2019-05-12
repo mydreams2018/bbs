@@ -47,4 +47,13 @@
     select id, account, password, alias, phone, img, is_vip, state, email, description, register_time
     from user
   </select>
+
+    <select id="selectByAccounts" resultMap="BaseResultMap">
+      select id, account, password, alias, phone, img, is_vip, state, email, description, register_time
+      from user
+      where account IN
+      <foreach collection="acts"  item="as" separator="," close=")"  open="(">
+          #{as}
+      </foreach>
+    </select>
 </mapper>

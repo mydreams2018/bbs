@@ -19,7 +19,7 @@ public class User {
 
     private Long phone;
 
-    private String img="/default.jpg";
+    private String img="/userImg/default.jpg";
 
     private Boolean isVip;
 

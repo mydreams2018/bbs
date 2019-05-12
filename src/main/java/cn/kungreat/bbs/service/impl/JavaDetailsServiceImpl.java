@@ -27,7 +27,7 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
 
     @Transactional
     public long insert(JavaDetails record) {
-        Assert.isTrue(!StringUtils.isEmpty(record.validMessage()),record.validMessage());
+        Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setAccount(account);
         record.setPublishTime(new Date());
@@ -82,9 +82,10 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(account.equals(javaDetails.getAccount()),
                 "没有权限编辑别人的贴子");
-        Assert.isTrue(!StringUtils.isEmpty(record.validMessage()),record.validMessage());
-        record.setUpdateTime(new Date());
-        return javaDetailsMapper.updateByPrimaryId(record);
+        Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
+        javaDetails.setUpdateTime(new Date());
+        javaDetails.setDetailData(record.getDetailData());
+        return javaDetailsMapper.updateByPrimaryId(javaDetails);
     }
 
     @Override
@@ -99,8 +100,7 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
 
     @Override
     public QueryResult selectByPostsId(JavaDetailsQuery query) {
-        Assert.isTrue(!StringUtils.isEmpty(query.getPostsId().toString())
-                        || !StringUtils.isEmpty(query.getAccount()),"查询必要条件为空");
+        Assert.isTrue(!StringUtils.isEmpty(query.getPostsId().toString()),"查询必要条件为空");
         long count = javaDetailsMapper.selectCount(query);
         List list  = Collections.emptyList();
         if (count >  0){

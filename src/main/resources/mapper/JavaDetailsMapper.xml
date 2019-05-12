@@ -45,7 +45,7 @@
     posts_id, is_posts
     from java_details
     <include refid="baseQuery"/>
-    ORDER BY publish_time DESC
+    ORDER BY publish_time
     limit #{start},#{pageSize}
   </select>
 

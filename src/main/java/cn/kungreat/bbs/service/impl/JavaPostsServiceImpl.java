@@ -61,10 +61,10 @@ public class JavaPostsServiceImpl implements JavaPostsService {
         record.setAccount(account);
         Date date = new Date();
         record.setPublishTime(date);
-        long postsId = javaPostsMapper.insert(record);
+        javaPostsMapper.insert(record);
         JavaDetails javaDetails = new JavaDetails();
         javaDetails.setAccount(account);
-        javaDetails.setPostsId(postsId);
+        javaDetails.setPostsId(record.getId());
         javaDetails.setIsPosts(1);
         javaDetails.setPublishTime(date);
         javaDetails.setDetailData(record.getDetailData());
@@ -95,16 +95,19 @@ public class JavaPostsServiceImpl implements JavaPostsService {
     @Transactional
     public int updateByPrimaryKey(JavaPosts record) {
         Assert.isTrue(record.getId()!=null,"查询ID不能为空");
-        Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
+        JavaPosts javaPosts = javaPostsMapper.selectByPrimaryKey(record.getId());
+        Assert.isTrue(javaPosts!=null,"查询ID不能为空");
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
-        Assert.isTrue(account.equals(record.getAccount()),"用户信息不匹配");
+        Assert.isTrue(account.equals(javaPosts.getAccount()),"没有权限修改别人的贴子");
+        Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         Date date = new Date();
-        int i = javaPostsMapper.updateByPrimaryKey(record);
-        Assert.isTrue(i > 0,"操作失败");
+        javaPosts.setCategory(record.getCategory());
+        javaPosts.setPostsName(record.getPostsName());
+        javaPostsMapper.updateByPrimaryKey(javaPosts);
         JavaDetails javaDetails = new JavaDetails();
         javaDetails.setAccount(account);
         javaDetails.setUpdateTime(date);
-        javaDetails.setPostsId(record.getId());
+        javaDetails.setPostsId(javaPosts.getId());
         javaDetails.setDetailData(record.getDetailData());
         return javaDetailsMapper.updateForPosts(javaDetails);
     }
