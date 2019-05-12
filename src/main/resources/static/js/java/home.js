@@ -62,6 +62,27 @@ $(function(){
         }
     });
 
+    $.ajax({
+        url: "/javaPosts/selectAll",
+        type: "post",
+        dataType: "json",
+        data: {"orderField":"reply_total","pageSize":8},
+        success: function (data) {
+            if(data.datas.length > 0){
+                var a = $("#hotReply");
+                var datas = data.datas;
+                for (x = 0; x < datas.length; x++){
+                    if(x < 8){
+                        a =  a.next("a");
+                        a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
+                        a.prop("title",datas[x].postsName);
+                        a.text(datas[x].postsName.substring(0,18));
+                    }
+                }
+            }
+        }
+    });
+
 });
 //页面重载时
 function getDatas(data) {

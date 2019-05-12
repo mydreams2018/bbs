@@ -168,9 +168,8 @@
 </#if>
 
 <#if (Session.KUN_CURRENT_NAME)?? >
-    <div class="row pading30">
-        <div class="col-3"></div>
-        <div class="col-9">
+    <div class="row pading30 justify-content-end">
+        <div class="col-md-9">
             <form id="send-java-posts" method="post" action="/javaDetails/save">
                 <div class="form-group">
                     <label for="summernote">最大内容3m内:图片过大请使用外部链接</label>
