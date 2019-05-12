@@ -9,10 +9,6 @@ $(function(){
         type: "post",
         data: {"state":1},
         dataType: "json",
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
         success: function (data) {
             if(data.length > 0){
                 for(x = 0 ;x < data.length;x++){
@@ -32,10 +28,6 @@ $(function(){
         url: "/javaPosts/selectAll",
         type: "post",
         dataType: "json",
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: true,
         success: function (data) {
             getDatas(data);
         }
@@ -98,7 +90,7 @@ function getDatas(data) {
 
                 $("#postsDatas").append($(a).clone());
                 var userMessage =  $(a).clone();
-                userMessage.prop("href","#");
+                userMessage.prop("href","/accountPosts.html?account="+datas[x].account);
                 userMessage.text(datas[x].account +': '+ new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
                 $("#text-right").append(userMessage);
             }else {
@@ -107,7 +99,7 @@ function getDatas(data) {
                 posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
                 posts.prop("title", datas[x].postsName);
                 posts.text(datas[x].postsName.substring(0, 18));
-                userMessage.prop("href", "#");
+                userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
                 userMessage.prop("title", datas[x].postsName);
                 userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
                 $("#postsDatas").append(posts);
@@ -214,7 +206,7 @@ function getCurrentDatas(data) {
             posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
             posts.prop("title", datas[x].postsName);
             posts.text(datas[x].postsName.substring(0, 18));
-            userMessage.prop("href", "#");
+            userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
             userMessage.prop("title", datas[x].postsName);
             userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
             $("#postsDatas").append(posts);
