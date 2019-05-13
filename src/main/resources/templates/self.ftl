@@ -161,7 +161,7 @@
                 </div>
 
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-
+                    <a class="btn btn-primary" href="/accountPosts.html?account=${(userDetail.account)!}" role="button">跳转</a>
                 </div>
 
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">

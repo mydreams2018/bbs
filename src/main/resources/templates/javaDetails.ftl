@@ -211,12 +211,27 @@
                         </div>
                         <div class="card-footer text-right">
                             <small class="text-muted">
-
                                 <a href="javascript:sustain(${(data.id)!})" class="card-link">
-                                    顶:${(records[data_index][0].total)!0}
+                                    <#if (records[data_index][0])?? >
+                                        <#if records[data_index][0].state>
+                                            顶:${(records[data_index][0].total)!0}
+                                        <#else>
+                                            顶:0
+                                        </#if>
+                                    <#else>
+                                        顶:0
+                                    </#if>
                                 </a>
                                 <a href="javascript:oppose(${(data.id)!})" class="card-link">
-                                    踩:${(records[data_index][1].total)!0}
+                                    <#if (records[data_index][0])?? >
+                                        <#if records[data_index][0].state == false>
+                                            踩:${(records[data_index][0].total)!0}
+                                        <#else>
+                                            踩:${(records[data_index][1].total)!0}
+                                        </#if>
+                                    <#else>
+                                        踩:0
+                                    </#if>
                                 </a>
                                 <button  class="card-link btn-primary" data-sustain="${(records[data_index][0].account)!'无'}"
                                          data-oppose="${(records[data_index][1].account)!'无'}" onclick="showModal(this)" >查</button>
