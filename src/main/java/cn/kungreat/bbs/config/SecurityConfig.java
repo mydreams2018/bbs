@@ -16,6 +16,7 @@ import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private FaliureHandler faliureHandler;
     @Autowired
     private PersistentTokenRepository tokenRepository;
+    @Autowired
+    private SpringSocialConfigurer socialConfigurer;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myUserDetails).passwordEncoder(passwordEncoder);
@@ -56,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // if Spring MVC is on classpath and no CorsConfigurationSource is provided,
                 // Spring Security will use CORS configuration provided to Spring MVC
                 .cors().and().csrf().disable()
+                .apply(socialConfigurer).and()
                 .addFilterBefore(new ImageFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new SingleSessionFilter(), ExceptionTranslationFilter.class)
                 .authorizeRequests()

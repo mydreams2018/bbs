@@ -1,6 +1,7 @@
 package cn.kungreat.bbs.config;
 
 import cn.kungreat.bbs.filter.AnotherImageFilter;
+import cn.kungreat.bbs.social.config.SocialProperties;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
@@ -64,6 +65,12 @@ public class BeanConfig {
         listener.setListener(new RequestContextListener());
         listener.setOrder(1);
         return listener;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "cn.kungreat.social")
+    public SocialProperties configBean(){
+        return new SocialProperties();
     }
 
     @Bean

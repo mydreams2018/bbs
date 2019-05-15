@@ -118,7 +118,9 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">Sign in</button>
             <button class="btn btn-lg btn-primary btn-block" type="button" id="join_as">Join as</button>
-            <p class="mt-5 mb-3 text-muted text-center"><a href="/home.html">&copy; 首页</a></p>
+            <button class="btn btn-lg btn-block" type="button" >
+                <a href="/auth/qq">QQ:登录</a>
+            </button>
         </form>
     </div>
 </div>
