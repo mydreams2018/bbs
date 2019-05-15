@@ -22,6 +22,7 @@ public class MyConnectionSignUp implements ConnectionSignUp {
         User user = new User();
         user.setRegisterTime(new Date());
         user.setAccount(s);
+        user.setPassword("yjssaje");
         user.setImg(connection.getImageUrl());
         user.setAlias(connection.getDisplayName());
         userService.insert(user);
