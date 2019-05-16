@@ -91,7 +91,7 @@ function getDatas(data) {
                 $("#postsDatas").append($(a).clone());
                 var userMessage =  $(a).clone();
                 userMessage.prop("href","/accountPosts.html?account="+datas[x].account);
-                userMessage.text(datas[x].account +': '+ new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
+                userMessage.text(datas[x].account +': '+ new Date(datas[x].publishTime).format("yyyy-MM-dd"));
                 $("#text-right").append(userMessage);
             }else {
                 var posts = $("#data-a-colne").clone();
@@ -101,7 +101,7 @@ function getDatas(data) {
                 posts.text(datas[x].postsName.substring(0, 18));
                 userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
                 userMessage.prop("title", datas[x].postsName);
-                userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
+                userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
                 $("#postsDatas").append(posts);
                 $("#text-right").append(userMessage);
             }
@@ -208,7 +208,7 @@ function getCurrentDatas(data) {
             posts.text(datas[x].postsName.substring(0, 18));
             userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
             userMessage.prop("title", datas[x].postsName);
-            userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd hh:mm:ss"));
+            userMessage.text(datas[x].account + ': ' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
             $("#postsDatas").append(posts);
             $("#text-right").append(userMessage);
         }

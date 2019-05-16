@@ -202,7 +202,13 @@
                                 <p class="card-text">${(postsUsers[data_index].description)!}</p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">${(postsUsers[data_index].registerTime)?string("yyyy-MM-dd HH:mm:ss")}</small>
+                                <small class="text-muted">
+                                    <#if (postsUsers[data_index].registerTime)??>
+                                        ${(postsUsers[data_index].registerTime)?string("yyyy-MM-dd HH:mm:ss")}
+                                    <#else>
+                                        BUG用户
+                                    </#if>
+                                </small>
                             </div>
                     </div>
                     <div class="card col-md-9">
