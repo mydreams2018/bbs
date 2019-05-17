@@ -143,12 +143,12 @@
             });
 
         };
-        
+
         function showModal(obj) {
             var oppose =$(obj).attr("data-oppose");
             var sustain =$(obj).attr("data-sustain");
-            $("#oppose-user").text('踩的人:'+oppose);
-            $("#sustain-user").text('顶的人:'+sustain);
+            var text = '踩的人:'+oppose+'<br>'+'顶的人:'+sustain;
+            $("#user-sustain-oppose").html(text);
             $("#modal-show").modal('show');
         };
     </script>
@@ -298,25 +298,25 @@
 </#if>
 
 
-<div class="modal fade" tabindex="-1" role="dialog" id="modal-show" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">顶:踩</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-show" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">顶:踩</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
                 </button>
+               </div>
+               <div class="modal-body" style="word-break:break-all" id="user-sustain-oppose">
+
+                </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
             </div>
-            <div class="modal-body">
-                <div id="sustain-user"></div>
-                <div id="oppose-user"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
     </div>
 </div>
+
 
 <div class="row pading30 justify-content-end">
     <div class="col-md-6">
