@@ -13,15 +13,18 @@
         }
     </style>
     <link href="/summernote/summernote-bs4.css" rel="stylesheet">
+    <link href="/css/zoomify.css" rel="stylesheet">
     <script src="/js/jquery-3.4.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
     <script src="/summernote/summernote-bs4.js"></script>
+    <script src="/js/zoomify.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#summernote').summernote({
                 height: 600
             });
+            $("img").zoomify();
             var current = ${(details.page.currentPage)!};
             var last =  $("#page-last").attr("data-crt");
             var next = $("#page-next").attr("data-crt");
