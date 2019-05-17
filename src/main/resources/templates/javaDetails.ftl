@@ -24,7 +24,7 @@
             $('#summernote').summernote({
                 height: 600
             });
-            $("img").zoomify();
+            $(".card img").zoomify();
             var current = ${(details.page.currentPage)!};
             var last =  $("#page-last").attr("data-crt");
             var next = $("#page-next").attr("data-crt");
@@ -206,6 +206,7 @@
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted">
+                                    <img src="${(postsUsers[data_index].icon)!}" class="img-fluid" alt="">
                                     <#if (postsUsers[data_index].registerTime)??>
                                         ${(postsUsers[data_index].registerTime)?string("yyyy-MM-dd HH:mm:ss")}
                                     <#else>

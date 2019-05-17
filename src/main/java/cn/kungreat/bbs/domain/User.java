@@ -30,6 +30,7 @@ public class User {
     private String description;
 
     private Date registerTime;
+    private String icon="/userImg/bbsIcon/defaultMember.gif";
 
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
