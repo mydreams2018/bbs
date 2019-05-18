@@ -6,6 +6,7 @@ import cn.kungreat.bbs.mapper.JavaDetailsMapper;
 import cn.kungreat.bbs.mapper.JavaPostsMapper;
 import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.query.JavaPostsQuery;
+import cn.kungreat.bbs.service.JavaDetailsService;
 import cn.kungreat.bbs.service.JavaPostsService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +28,8 @@ public class JavaPostsServiceImpl implements JavaPostsService {
     private JavaPostsMapper javaPostsMapper;
     @Autowired
     private JavaDetailsMapper javaDetailsMapper;
-
+    @Autowired
+    private JavaDetailsService javaDetailsService;
     //要权限控制
     @Transactional
     public int deleteByPrimaryKey(Long id) {
@@ -110,5 +113,21 @@ public class JavaPostsServiceImpl implements JavaPostsService {
         javaDetails.setPostsId(javaPosts.getId());
         javaDetails.setDetailData(record.getDetailData());
         return javaDetailsMapper.updateForPosts(javaDetails);
+    }
+
+    @Override
+    public QueryResult selectReplyByAccount(JavaDetailsQuery query) {
+        QueryResult queryResult = javaDetailsService.selectReply(query);
+        List datas = queryResult.getDatas();
+        List<JavaPosts>  list = new ArrayList<>();
+        if(datas != null && datas.size() > 0){
+            List<JavaDetails> javaDetails =  datas;
+            for (int x=0 ;x < javaDetails.size();x++){
+                JavaPosts javaPosts = javaPostsMapper.selectByPrimaryKey(javaDetails.get(x).getPostsId());
+                list.add(javaPosts);
+            }
+        }
+        queryResult.setDatas(list);
+        return queryResult;
     }
 }

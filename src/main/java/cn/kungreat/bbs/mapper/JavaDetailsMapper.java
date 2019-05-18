@@ -16,4 +16,7 @@ public interface JavaDetailsMapper {
 
     long selectCount(JavaDetailsQuery query);
     List<JavaDetails> selectAll(JavaDetailsQuery query);
+
+    List<Integer> selectReplyCount(JavaDetailsQuery query);
+    List<JavaDetails> selectReply(JavaDetailsQuery query);
 }

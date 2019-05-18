@@ -11,4 +11,5 @@ public interface JavaDetailsService {
     int updateByPrimaryId(JavaDetails record);
     JavaDetails selectByPrimaryId(long PrimaryId);
     QueryResult selectByPostsId(JavaDetailsQuery query);
+    QueryResult selectReply(JavaDetailsQuery query);
 }

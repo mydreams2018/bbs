@@ -1,6 +1,7 @@
 package cn.kungreat.bbs.service;
 
 import cn.kungreat.bbs.domain.JavaPosts;
+import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.query.JavaPostsQuery;
 import cn.kungreat.bbs.vo.QueryResult;
 
@@ -17,4 +18,5 @@ public interface JavaPostsService {
     QueryResult selectAll(JavaPostsQuery query);
 
     int updateByPrimaryKey(JavaPosts record);
+    QueryResult selectReplyByAccount(JavaDetailsQuery query);
 }

@@ -9,6 +9,7 @@
     <result column="detail_data" property="detailData" />
     <result column="posts_id" property="postsId" />
     <result column="is_posts" property="isPosts" />
+    <result column="reply_total" property="replyTotal" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.JavaDetails" useGeneratedKeys="true">
     insert into java_details (account, publish_time, update_time, 
@@ -65,6 +66,20 @@
      select id, account, publish_time, update_time, detail_data,
       posts_id, is_posts
     from java_details where posts_id = #{0} ORDER BY update_time DESC  LIMIT 1
+  </select>
+
+
+  <select id="selectReplyCount" resultType="java.lang.Integer">
+    select count(*) from java_details
+    <include refid="baseQuery"/>
+    GROUP BY posts_id
+  </select>
+
+  <select id="selectReply" resultMap="BaseResultMap">
+        SELECT account, max(publish_time) as publish_time , count(*) as reply_total, posts_id FROM java_details
+        <include refid="baseQuery"/>
+        GROUP BY posts_id ORDER BY ${orderField} DESC
+        limit #{start},#{pageSize}
   </select>
 
   <sql id="baseQuery">

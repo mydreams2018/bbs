@@ -113,4 +113,19 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         return result;
     }
 
+    @Override
+    public QueryResult selectReply(JavaDetailsQuery query) {
+        Assert.isTrue(!StringUtils.isEmpty(query.getAccount()),"查询用户不能为空");
+        long count = javaDetailsMapper.selectReplyCount(query).size();
+        List list  = Collections.emptyList();
+        if (count >  0){
+            list = javaDetailsMapper.selectReply(query);
+        }
+        query.setData(count,query.getPageSize(),query.getCurrentPage());
+        QueryResult  result = new QueryResult();
+        result.setDatas(list);
+        result.setPage(query);
+        return result;
+    }
+
 }

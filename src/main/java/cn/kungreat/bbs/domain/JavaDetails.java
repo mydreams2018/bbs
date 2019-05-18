@@ -21,7 +21,8 @@ public class JavaDetails {
     private Long postsId;
 
     private Integer isPosts = 0;
-
+    // 统计字段
+    private Integer replyTotal;
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
         if(StringUtils.isEmpty(postsId.toString())){

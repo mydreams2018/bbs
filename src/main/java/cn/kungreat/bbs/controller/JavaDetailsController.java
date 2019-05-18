@@ -2,10 +2,12 @@ package cn.kungreat.bbs.controller;
 
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.JavaPosts;
+import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.service.JavaDetailsService;
 import cn.kungreat.bbs.service.JavaPostsService;
 import cn.kungreat.bbs.service.PostsCategoryService;
 import cn.kungreat.bbs.vo.JsonResult;
+import cn.kungreat.bbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/javaDetails")
@@ -64,5 +68,11 @@ public class JavaDetailsController {
             jsonResult.setMessage(e.getMessage());
         }
         return jsonResult;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectReply",method = RequestMethod.POST)
+    public QueryResult selectReply(JavaDetailsQuery query) {
+        return javaPostsService.selectReplyByAccount(query);
     }
 }
