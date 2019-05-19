@@ -24,7 +24,7 @@
             $('#summernote').summernote({
                 height: 600
             });
-            $(".card img").zoomify();
+            $("#zoomify img").zoomify();
             var current = ${(details.page.currentPage)!};
             var last =  $("#page-last").attr("data-crt");
             var next = $("#page-next").attr("data-crt");
@@ -216,7 +216,7 @@
                             </div>
                     </div>
                     <div class="card col-md-9">
-                        <div class="card-body">
+                        <div class="card-body" id="zoomify">
                             ${(data.detailData)!}
                         </div>
                         <div class="card-footer text-right">
