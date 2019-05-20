@@ -225,6 +225,7 @@
                                     <#if (records[data_index][0])?? >
                                         <#if records[data_index][0].state>
                                             顶:${(records[data_index][0].total)!0}
+                                            <#assign sustains = (records[data_index][0].account)!'无'>
                                         <#else>
                                             顶:0
                                         </#if>
@@ -236,15 +237,17 @@
                                     <#if (records[data_index][0])?? >
                                         <#if records[data_index][0].state == false>
                                             踩:${(records[data_index][0].total)!0}
+                                            <#assign opposes = (records[data_index][0].account)!'无'>
                                         <#else>
                                             踩:${(records[data_index][1].total)!0}
+                                            <#assign opposes = (records[data_index][1].account)!'无'>
                                         </#if>
                                     <#else>
                                         踩:0
                                     </#if>
                                 </a>
-                                <button  class="card-link btn-primary" data-sustain="${(records[data_index][0].account)!'无'}"
-                                         data-oppose="${(records[data_index][1].account)!'无'}" onclick="showModal(this)" >查</button>
+                                <button  class="card-link btn-primary" data-sustain="${(sustains)!'无'}"
+                                         data-oppose="${(opposes)!'无'}" onclick="showModal(this)" >查</button>
 
                                 &nbsp; &nbsp; &nbsp;
                                 发布时间:${(data.publishTime)?string("yyyy-MM-dd HH:mm:ss")}
