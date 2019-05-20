@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.bbs.mapper.AssemblerDetailsRecordMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.AssemblerDetailsRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="assembler_details_id" jdbcType="BIGINT" property="assemblerDetailsId" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="total" property="total" />
+  </resultMap>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.AssemblerDetailsRecord" useGeneratedKeys="true">
+    insert into assembler_details_record (assembler_details_id, account, state
+      )
+    values (#{assemblerDetailsId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{state,jdbcType=BIT}
+      )
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, assembler_details_id, account, state
+    from assembler_details_record
+  </select>
+
+  <select id="countRecord" resultMap="BaseResultMap">
+       select  assembler_details_id, GROUP_CONCAT(account) as account, state, count(*) as total
+       from assembler_details_record
+       where assembler_details_id = #{0}
+       GROUP BY state ORDER BY state DESC
+  </select>
+
+  <select id="selectByPrimary" resultMap="BaseResultMap">
+       select id, assembler_details_id, account, state
+    from assembler_details_record
+    where assembler_details_id = #{assemblerDetailsId} and account = #{account} and state = #{state}
+  </select>
+</mapper>
