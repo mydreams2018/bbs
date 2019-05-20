@@ -228,9 +228,11 @@
                                             <#assign sustains = (records[data_index][0].account)!'无'>
                                         <#else>
                                             顶:0
+                                            <#assign sustains = '无'>
                                         </#if>
                                     <#else>
                                         顶:0
+                                        <#assign sustains = '无'>
                                     </#if>
                                 </a>
                                 <a href="javascript:oppose(${(data.id)!})" class="card-link">
@@ -244,6 +246,7 @@
                                         </#if>
                                     <#else>
                                         踩:0
+                                        <#assign opposes = '无'>
                                     </#if>
                                 </a>
                                 <button  class="card-link btn-primary" data-sustain="${(sustains)!'无'}"
