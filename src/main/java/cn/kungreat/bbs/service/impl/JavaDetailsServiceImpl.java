@@ -3,9 +3,11 @@ package cn.kungreat.bbs.service.impl;
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.JavaPosts;
 import cn.kungreat.bbs.mapper.JavaDetailsMapper;
+import cn.kungreat.bbs.mapper.JavaDetailsRecordMapper;
 import cn.kungreat.bbs.mapper.JavaPostsMapper;
 import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.service.JavaDetailsService;
+import cn.kungreat.bbs.service.JavaPostsService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,10 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
     private JavaDetailsMapper javaDetailsMapper;
     @Autowired
     private JavaPostsMapper javaPostsMapper;
-
+    @Autowired
+    private JavaPostsService javaPostsService;
+    @Autowired
+    private JavaDetailsRecordMapper javaDetailsRecordMapper;
     @Transactional
     public long insert(JavaDetails record) {
         Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
@@ -55,14 +60,15 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
     public int deleteByPrimaryId(Long PrimaryId){
         JavaDetails javaDetails = javaDetailsMapper.selectByPrimaryId(PrimaryId);
         Assert.isTrue(javaDetails!=null,"查询数据失败");
-        String account = SecurityContextHolder.getContext().getAuthentication().getName();
-        Assert.isTrue(account.equals(javaDetails.getAccount()),
-                "没有权限删除别人的贴子");
-        int i = javaDetailsMapper.deleteByPrimaryId(PrimaryId);
-        if(i > 0){
-            subtractReply(i, javaDetails.getPostsId());
+        if(javaDetails.getIsPosts() == 1){
+            javaPostsService.deleteByPrimaryKey(javaDetails.getPostsId());
+            javaDetailsRecordMapper.deleteByPostsId(javaDetails.getPostsId());
+        }else{
+            javaDetailsMapper.deleteByPrimaryId(PrimaryId);
+            javaDetailsRecordMapper.deleteByDeatilsId(PrimaryId);
+            subtractReply(1, javaDetails.getPostsId());
         }
-        return i;
+        return 1;
     }
 
     private void subtractReply(int i, Long postsId) {

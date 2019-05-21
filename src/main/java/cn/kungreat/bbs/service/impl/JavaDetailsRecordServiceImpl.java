@@ -2,6 +2,7 @@ package cn.kungreat.bbs.service.impl;
 
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.JavaDetailsRecord;
+import cn.kungreat.bbs.mapper.JavaDetailsMapper;
 import cn.kungreat.bbs.mapper.JavaDetailsRecordMapper;
 import cn.kungreat.bbs.service.JavaDetailsRecordService;
 import com.alibaba.druid.util.StringUtils;
@@ -17,13 +18,15 @@ import java.util.List;
 public class JavaDetailsRecordServiceImpl implements JavaDetailsRecordService {
     @Autowired
     private JavaDetailsRecordMapper javaDetailsRecordMapper;
-
+    @Autowired
+    private JavaDetailsMapper javaDetailsMapper;
     @Transactional
     public int insert(JavaDetailsRecord record) {
         Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setAccount(account);
         Assert.isTrue(javaDetailsRecordMapper.selectByPrimary(record)==null,"请不要重复操作");
+        record.setPostsId(javaDetailsMapper.selectByPrimaryId(record.getJavaDetailsId()).getPostsId());
         return javaDetailsRecordMapper.insert(record);
     }
 

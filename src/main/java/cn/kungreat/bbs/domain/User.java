@@ -23,12 +23,12 @@ public class User {
 
     private Boolean isVip;
 
-    private Byte state;
+    private Byte state=1;
 
     private String email;
 
     private String description;
-
+    private String originFrom="default";
     private Date registerTime;
     private String icon="/userImg/bbsIcon/defaultMember.gif";
 

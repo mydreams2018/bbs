@@ -58,7 +58,7 @@ public class MyUserDetails implements UserDetailsService, SocialUserDetailsServi
             //下面4个返回 false 会抛异常 .可以用来作状态处理
             @Override
             public boolean isAccountNonExpired() {
-                return true;
+                return user.getState()==1;
             }
 
             @Override
@@ -112,7 +112,7 @@ public class MyUserDetails implements UserDetailsService, SocialUserDetailsServi
 
             @Override
             public boolean isAccountNonExpired() {
-                return true;
+                return user.getState() == 1;
             }
 
             @Override
