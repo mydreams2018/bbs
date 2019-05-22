@@ -14,6 +14,7 @@ public class AssemblerDetailsRecord {
     private String account;
 
     private Boolean state=null;
+    private Long postsId;
     // 分组计算数据
     private Integer total;
 

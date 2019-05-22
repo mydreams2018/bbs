@@ -3,9 +3,11 @@ package cn.kungreat.bbs.service.impl;
 import cn.kungreat.bbs.domain.AssemblerDetails;
 import cn.kungreat.bbs.domain.AssemblerPosts;
 import cn.kungreat.bbs.mapper.AssemblerDetailsMapper;
+import cn.kungreat.bbs.mapper.AssemblerDetailsRecordMapper;
 import cn.kungreat.bbs.mapper.AssemblerPostsMapper;
 import cn.kungreat.bbs.query.AssemblerDetailsQuery;
 import cn.kungreat.bbs.service.AssemblerDetailsService;
+import cn.kungreat.bbs.service.AssemblerPostsService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ public class AssemblerDetailsServiceImpl implements AssemblerDetailsService {
     private AssemblerDetailsMapper assemblerDetailsMapper;
     @Autowired
     private AssemblerPostsMapper assemblerPostsMapper;
+    @Autowired
+    private AssemblerDetailsRecordMapper assemblerDetailsRecordMapper;
+    @Autowired
+    private AssemblerPostsService assemblerPostsService;
 
     @Transactional
     public long insert(AssemblerDetails record) {
@@ -55,14 +61,15 @@ public class AssemblerDetailsServiceImpl implements AssemblerDetailsService {
     public int deleteByPrimaryId(Long PrimaryId){
         AssemblerDetails assemblerDetails = assemblerDetailsMapper.selectByPrimaryId(PrimaryId);
         Assert.isTrue(assemblerDetails!=null,"查询数据失败");
-        String account = SecurityContextHolder.getContext().getAuthentication().getName();
-        Assert.isTrue(account.equals(assemblerDetails.getAccount()),
-                "没有权限删除别人的贴子");
-        int i = assemblerDetailsMapper.deleteByPrimaryId(PrimaryId);
-        if(i > 0){
-            subtractReply(i, assemblerDetails.getPostsId());
+        if(assemblerDetails.getIsPosts() == 1){
+            assemblerPostsService.deleteByPrimaryKey(assemblerDetails.getPostsId());
+            assemblerDetailsRecordMapper.deleteByPostsId(assemblerDetails.getPostsId());
+        }else{
+            assemblerDetailsMapper.deleteByPrimaryId(PrimaryId);
+            assemblerDetailsRecordMapper.deleteByDetailsId(PrimaryId);
+            subtractReply(1, assemblerDetails.getPostsId());
         }
-        return i;
+        return 1;
     }
 
     private void subtractReply(int i, Long postsId) {

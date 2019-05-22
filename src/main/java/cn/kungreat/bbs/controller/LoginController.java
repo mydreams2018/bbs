@@ -40,12 +40,4 @@ public class LoginController {
         return jsonResult;
     }
 
-
-    @PreAuthorize("hasRole('login-test')")
-    @ResponseBody
-    @RequestMapping(value = "/test")
-    public String test(){
-        return "hello - world";
-    }
-
 }

@@ -2,6 +2,7 @@ package cn.kungreat.bbs.service.impl;
 
 import cn.kungreat.bbs.domain.AssemblerDetails;
 import cn.kungreat.bbs.domain.AssemblerDetailsRecord;
+import cn.kungreat.bbs.mapper.AssemblerDetailsMapper;
 import cn.kungreat.bbs.mapper.AssemblerDetailsRecordMapper;
 import cn.kungreat.bbs.service.AssemblerDetailsRecordService;
 import com.alibaba.druid.util.StringUtils;
@@ -18,6 +19,8 @@ import java.util.List;
 public class AssemblerDetailsRecordServiceImpl implements AssemblerDetailsRecordService {
     @Autowired
     private AssemblerDetailsRecordMapper assemblerDetailsRecordMapper;
+    @Autowired
+    private AssemblerDetailsMapper assemblerDetailsMapper;
 
     @Transactional
     public int insert(AssemblerDetailsRecord record) {
@@ -25,6 +28,7 @@ public class AssemblerDetailsRecordServiceImpl implements AssemblerDetailsRecord
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setAccount(account);
         Assert.isTrue(assemblerDetailsRecordMapper.selectByPrimary(record)==null,"请不要重复操作");
+        record.setPostsId(assemblerDetailsMapper.selectByPrimaryId(record.getAssemblerDetailsId()).getPostsId());
         return assemblerDetailsRecordMapper.insert(record);
     }
 

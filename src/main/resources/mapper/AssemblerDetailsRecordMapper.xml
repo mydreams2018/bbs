@@ -7,17 +7,26 @@
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="state" jdbcType="BIT" property="state" />
     <result column="total" property="total" />
+    <result column="posts_id" property="postsId" />
   </resultMap>
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.AssemblerDetailsRecord" useGeneratedKeys="true">
-    insert into assembler_details_record (assembler_details_id, account, state
+    insert into assembler_details_record (assembler_details_id, account, state, posts_id
       )
-    values (#{assemblerDetailsId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{state,jdbcType=BIT}
+    values (#{assemblerDetailsId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{state,jdbcType=BIT}, #{postsId}
       )
   </insert>
 
+    <delete id="deleteByDetailsId">
+      DELETE FROM assembler_details_record WHERE assembler_details_id = #{0}
+    </delete>
+
+  <delete id="deleteByPostsId">
+    DELETE FROM assembler_details_record WHERE posts_id = #{0}
+  </delete>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, assembler_details_id, account, state
+    select id, assembler_details_id, account, state, posts_id
     from assembler_details_record
   </select>
 
@@ -29,7 +38,7 @@
   </select>
 
   <select id="selectByPrimary" resultMap="BaseResultMap">
-       select id, assembler_details_id, account, state
+       select id, assembler_details_id, account, state, posts_id
     from assembler_details_record
     where assembler_details_id = #{assemblerDetailsId} and account = #{account} and state = #{state}
   </select>
