@@ -1,6 +1,7 @@
 package cn.kungreat.bbs.service.impl;
 
 import cn.kungreat.bbs.domain.AssemblerDetails;
+import cn.kungreat.bbs.domain.DataDetails;
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.User;
 import cn.kungreat.bbs.mapper.UserMapper;
@@ -54,6 +55,10 @@ public class UserServiceImpl implements UserService {
             if(accounts.get(x) instanceof AssemblerDetails){
                 AssemblerDetails assemblerDetails = (AssemblerDetails) accounts.get(x);
                 account =assemblerDetails.getAccount();
+            }
+            if(accounts.get(x) instanceof DataDetails){
+                DataDetails dataDetails = (DataDetails) accounts.get(x);
+                account =dataDetails.getAccount();
             }
             act.add(userMapper.selectByPrimaryKey(account));
         }
