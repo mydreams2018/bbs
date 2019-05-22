@@ -1,10 +1,13 @@
 package cn.kungreat.bbs.controller;
 
 import cn.kungreat.bbs.domain.AssemblerPosts;
+import cn.kungreat.bbs.domain.DataPosts;
 import cn.kungreat.bbs.domain.JavaPosts;
 import cn.kungreat.bbs.mapper.AssemblerPostsMapper;
+import cn.kungreat.bbs.mapper.DataPostsMapper;
 import cn.kungreat.bbs.mapper.JavaPostsMapper;
 import cn.kungreat.bbs.query.AssemblerDetailsQuery;
+import cn.kungreat.bbs.query.DataDetailsQuery;
 import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.service.*;
 import cn.kungreat.bbs.vo.JsonResult;
@@ -36,7 +39,12 @@ public class ManagerController {
     private AssemblerDetailsService assemblerDetailsService;
     @Autowired
     private AssemblerDetailsRecordService assemblerDetailsRecordService;
-
+    @Autowired
+    private DataPostsMapper dataPostsMapper;
+    @Autowired
+    private DataDetailsService dataDetailsService;
+    @Autowired
+    private DataDetailsRecordService dataDetailsRecordService;
     @PreAuthorize("hasRole('manager-java-show')")
     @RequestMapping(value = "/java")
     public String java(){
@@ -109,6 +117,46 @@ public class ManagerController {
         JsonResult jsonResult = new JsonResult();
         try{
             assemblerDetailsService.deleteByPrimaryId(id);
+            jsonResult.setMessage("success");
+        }catch (Exception e){
+            jsonResult.setMessage(e.getMessage());
+            jsonResult.setResult(false);
+        }
+        return jsonResult;
+    }
+
+    @PreAuthorize("hasRole('manager-data-show')")
+    @RequestMapping(value = "/data")
+    public String data(){
+        return "/manager/dataPosts";
+    }
+
+    @PreAuthorize("hasRole('manager-data-edit')")
+    @RequestMapping(value = "/editDataDetails")
+    public String editDataDetails(@RequestParam Long id, Model model, Long currentPage){
+        DataPosts dataPosts = dataPostsMapper.selectByPrimaryKey(id);
+        if(dataPosts != null){
+            model.addAttribute("posts",dataPosts);
+            DataDetailsQuery dataDetailsQuery = new DataDetailsQuery();
+            dataDetailsQuery.setPostsId(id);
+            dataDetailsQuery.setPageSize(10L);
+            dataDetailsQuery.setCurrentPage(currentPage);
+            QueryResult queryResult = dataDetailsService.selectByPostsId(dataDetailsQuery);
+            model.addAttribute("details",queryResult);
+            model.addAttribute("records",dataDetailsRecordService.selectByDetails(queryResult.getDatas()));
+            model.addAttribute("postsUsers",userService.selectByAccounts(queryResult.getDatas()));
+            return "/manager/editDataDetails";
+        }
+        return "redirect:/data/data.html";
+    }
+
+    @ResponseBody
+    @PreAuthorize("hasRole('manager-data-delete')")
+    @RequestMapping(value = "/deleteData",method = RequestMethod.POST)
+    public JsonResult deleteData(@RequestParam Long id){
+        JsonResult jsonResult = new JsonResult();
+        try{
+            dataDetailsService.deleteByPrimaryId(id);
             jsonResult.setMessage("success");
         }catch (Exception e){
             jsonResult.setMessage(e.getMessage());

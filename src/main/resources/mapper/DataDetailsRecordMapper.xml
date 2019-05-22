@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.bbs.mapper.DataDetailsRecordMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.DataDetailsRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="details_id" jdbcType="BIGINT" property="detailsId" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="total" property="total" />
+    <result column="posts_id" property="postsId" />
+  </resultMap>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.DataDetailsRecord" useGeneratedKeys="true">
+    insert into data_details_record (details_id, account, state, posts_id
+      )
+    values (#{detailsId}, #{account},
+            #{state}, #{postsId}
+      )
+  </insert>
+
+    <delete id="deleteByDeatilsId">
+      DELETE FROM data_details_record WHERE details_id = #{0}
+    </delete>
+
+  <delete id="deleteByPostsId">
+    DELETE FROM data_details_record WHERE posts_id = #{0}
+  </delete>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, details_id, account, state, posts_id
+    from data_details_record
+  </select>
+
+  <select id="countRecord" resultMap="BaseResultMap">
+       select  details_id, GROUP_CONCAT(account) as account, state, count(*) as total
+       from data_details_record
+       where details_id = #{0}
+       GROUP BY state ORDER BY state DESC
+  </select>
+
+  <select id="selectByPrimary" resultMap="BaseResultMap">
+       select id, details_id, account, state, posts_id
+    from data_details_record
+    where details_id = #{detailsId} and account = #{account} and state = #{state}
+  </select>
+</mapper>
