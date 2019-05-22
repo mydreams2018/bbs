@@ -33,8 +33,8 @@ public class DataPostsController {
 
     @RequestMapping
     public String posts(Model model){
-        model.addAttribute("categorys",postsCategoryService.selectAll(1));
-        return "sendJavaPosts";
+        model.addAttribute("categorys",postsCategoryService.selectAll(3));
+        return "sendDataPosts";
     }
 
     @ResponseBody
@@ -69,9 +69,9 @@ public class DataPostsController {
             model.addAttribute("details",queryResult);
             model.addAttribute("records",dataDetailsRecordService.selectByDetails(queryResult.getDatas()));
             model.addAttribute("postsUsers",userService.selectByAccounts(queryResult.getDatas()));
-            return "javaDetails";
+            return "dataDetails";
         }
-        return "redirect:/java.html";
+        return "redirect:/data/data.html";
     }
 
     @ResponseBody
@@ -81,7 +81,7 @@ public class DataPostsController {
         try{
             dataPostsService.updateByPrimaryKey(record);
             jsonResult.setMessage("success");
-            jsonResult.setPath("/javaPosts/javaDetails?id="+record.getId());
+            jsonResult.setPath("/dataPosts/details?id="+record.getId());
         }catch (Exception e){
             jsonResult.setResult(false);
             jsonResult.setMessage(e.getMessage());

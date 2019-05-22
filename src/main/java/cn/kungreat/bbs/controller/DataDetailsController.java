@@ -46,9 +46,9 @@ public class DataDetailsController {
             DataPosts dataPosts = dataPostsService.selectByPrimaryKey(dataDetails.getPostsId());
             model.addAttribute("categorys",postsCategoryService.selectAll(1));
             model.addAttribute("posts",dataPosts);
-            return "updateJavaPosts";
+            return "updateDataPosts";
         }
-        return "updateJavaDetails";
+        return "updateDataDetails";
     }
 
     @ResponseBody
@@ -58,7 +58,7 @@ public class DataDetailsController {
         try{
             dataDetailsService.updateByPrimaryId(record);
             jsonResult.setMessage("success");
-            jsonResult.setPath("/javaPosts/javaDetails?id="+record.getPostsId());
+            jsonResult.setPath("/dataPosts/details?id="+record.getPostsId());
         }catch (Exception e){
             jsonResult.setResult(false);
             jsonResult.setMessage(e.getMessage());
