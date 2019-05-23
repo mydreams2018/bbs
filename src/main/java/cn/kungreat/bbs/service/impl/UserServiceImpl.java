@@ -7,12 +7,15 @@ import cn.kungreat.bbs.domain.User;
 import cn.kungreat.bbs.mapper.UserMapper;
 import cn.kungreat.bbs.service.UserService;
 import com.alibaba.druid.util.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +32,8 @@ public class UserServiceImpl implements UserService {
         Assert.isTrue(userMapper.selectByPrimaryKey(record.getAccount())==null,"用户名已经存在");
         record.setRegisterTime(new Date());
         record.setIsVip(false);
+        Calendar c = Calendar.getInstance();
+        record.setRegisterYear(c.get(Calendar.YEAR));
         record.setPassword(bCryptPasswordEncoder.encode(record.getPassword()));
         return userMapper.insert(record);
     }

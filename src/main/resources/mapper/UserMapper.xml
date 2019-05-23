@@ -15,14 +15,15 @@
     <result column="register_time"  property="registerTime" />
     <result column="icon"  property="icon" />
     <result column="origin_from"  property="originFrom" />
+    <result column="register_year"  property="registerYear" />
   </resultMap>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.User" useGeneratedKeys="true">
     insert into user (account, password, alias, 
       phone, img, is_vip, state, 
-      email, description, register_time, icon, origin_from)
+      email, description, register_time, icon, origin_from, register_year)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
       #{phone,jdbcType=BIGINT}, #{img,jdbcType=VARCHAR}, #{isVip,jdbcType=BIT}, #{state,jdbcType=TINYINT}, 
-      #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{registerTime}, #{icon}, #{originFrom})
+      #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{registerTime}, #{icon}, #{originFrom}, #{registerYear})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.kungreat.bbs.domain.User">
     update user
@@ -41,17 +42,17 @@
     </update>
 
     <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from
+    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from, register_year
     from user
     where account = #{0}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from
+    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from, register_year
     from user
   </select>
 
     <select id="selectByAccounts" resultMap="BaseResultMap">
-      select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from
+      select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from, register_year
       from user
       where account IN
       <foreach collection="acts"  item="as" separator="," close=")"  open="(">

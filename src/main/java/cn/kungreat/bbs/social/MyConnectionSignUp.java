@@ -7,7 +7,6 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Component
@@ -20,7 +19,6 @@ public class MyConnectionSignUp implements ConnectionSignUp {
     public String execute(Connection<?> connection) {
         String s = UUID.randomUUID().toString();
         User user = new User();
-        user.setRegisterTime(new Date());
         user.setAccount(s);
         user.setOriginFrom(connection.getKey().getProviderId());
         user.setPassword("yjssaje");

@@ -31,7 +31,7 @@ public class User {
     private String originFrom="default";
     private Date registerTime;
     private String icon="/userImg/bbsIcon/defaultMember.gif";
-
+    private Integer registerYear ;
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
         if(StringUtils.isEmpty(account) || account.length() < 6){
