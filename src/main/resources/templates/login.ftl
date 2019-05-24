@@ -20,6 +20,10 @@
             obj.src = "/image?time="+Math.random();
         };
 
+        function qqLogin() {
+            window.location.replace("/auth/qq");
+        };
+
         function check(){
             var name = $("#inputAccount").val();
             var pd = $("#inputPassword").val();
@@ -118,8 +122,8 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">Sign in</button>
             <button class="btn btn-lg btn-primary btn-block" type="button" id="join_as">Join as</button>
-            <button class="btn btn-lg btn-block" type="button" >
-                <a href="/auth/qq">QQ:登录</a>
+            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="qqLogin()" >
+                <img class="img-fluid" src="/userImg/qq.png" style="height: 32px">
             </button>
         </form>
     </div>
