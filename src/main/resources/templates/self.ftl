@@ -184,7 +184,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <p>这是一个由程序员编写的交流社区 &copy; DeathWater 开发的</p>
-                <p>on the github? <a href="https://github.com/mydreams2018">Visit the github</a></p>
+                <p>>粤ICP备19055569号</p>
             </div>
         </div>
 
