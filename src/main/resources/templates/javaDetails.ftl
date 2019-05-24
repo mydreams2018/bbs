@@ -189,9 +189,11 @@
     </div>
 </header>
 
-<h1 align="center">
-    <span class="badge badge-pill badge-success">${(posts.postsName)!}</span>
-</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 style="color: #ff5479">${(posts.postsName)!}</h1>
+    </div>
+</div>
 
 <#if (details.datas)??>
 
