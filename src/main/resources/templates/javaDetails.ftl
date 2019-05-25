@@ -25,6 +25,7 @@
                 height: 600
             });
             $("#zoomify img").zoomify();
+            $("#zoomify img").addClass("img-fluid");
             var current = ${(details.page.currentPage)!};
             var last =  $("#page-last").attr("data-crt");
             var next = $("#page-next").attr("data-crt");
