@@ -75,7 +75,7 @@
                 data: {
                     "postsId":postsId,
                     "detailData":markupStr,
-                    "code":code
+                    "img-code":code
                 },
                 dataType: "json",
                 success: function (data) {
@@ -287,7 +287,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="inputImageCode">Code</label>
-                        <input type="text" id="inputImageCode" name="code" class="form-control" placeholder="Code" required>
+                        <input type="text" id="inputImageCode" name="img-code" class="form-control" placeholder="img-code" required>
                     </div>
                     <div class="form-group col-md-4">
                         <img src="/image" onclick="flushImg(this)" alt="鲲" id="image_flush" style="height: 76px" class="img-fluid form-control">

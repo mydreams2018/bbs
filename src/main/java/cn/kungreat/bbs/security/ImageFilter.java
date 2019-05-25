@@ -15,7 +15,8 @@ import java.util.Date;
 public class ImageFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         HttpServletRequest re = request;
         String requestURI = re.getRequestURI();
         if("/defaultLogin".equals(requestURI) || "/login".equals(requestURI)){
@@ -24,8 +25,9 @@ public class ImageFilter extends OncePerRequestFilter {
             if(context.getAuthentication() != null){
                 String isAuth = context.getAuthentication().getName();
                 if(isAuth != null && !"anonymousUser".equals(isAuth)){
-                    HttpServletResponse rp = (HttpServletResponse)response;
-                    rp.sendRedirect("/home.html");
+                    re.getSession().removeAttribute("image_code");
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(JSON.toJSONString(new JsonResult(false,"已经存在用户,请先退出","/home.html")));
                     return ;
                 }
             }
@@ -33,6 +35,10 @@ public class ImageFilter extends OncePerRequestFilter {
         if("/defaultLogin".equals(requestURI) || "/javaDetails/updateSave".equals(requestURI)
                 ||"/login".equals(requestURI) || "/javaPosts/save".equals(requestURI) ||
                 "/javaDetails/save".equals(requestURI) || "/javaPosts/updatePosts".equals(requestURI)
+                ||"/assemblerPosts/updatePosts".equals(requestURI) || "/assemblerPosts/save".equals(requestURI)
+                ||"/assemblerDetails/updateSave".equals(requestURI) || "/assemblerDetails/save".equals(requestURI)
+                ||"/dataPosts/updatePosts".equals(requestURI) || "/dataPosts/save".equals(requestURI)
+                ||"/dataDetails/updateSave".equals(requestURI) || "/dataDetails/save".equals(requestURI)
         ){
             Object code = re.getSession().getAttribute("image_code");
             long seconds = 90000;
@@ -43,13 +49,14 @@ public class ImageFilter extends OncePerRequestFilter {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            if(code == null || seconds > 80000 || !code.equals(request.getParameter("code"))){
+            if(code == null || seconds > 80000 || !code.equals(request.getParameter("img-code"))){
                 re.getSession().removeAttribute("image_code");
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(JSON.toJSONString(new JsonResult(false,"验证码错误-或者超时","/register.html")));
                 return ;
             }
         }
+        re.getSession().removeAttribute("image_code");
         filterChain.doFilter(request,response);
     }
 }

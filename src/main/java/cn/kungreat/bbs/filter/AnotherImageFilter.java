@@ -24,13 +24,13 @@ public class AnotherImageFilter implements Filter {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            if(code == null || seconds > 80000 || !code.equals(request.getParameter("code"))){
-                re.getSession().removeAttribute("image_code");
+            if(code == null || seconds > 80000 || !code.equals(request.getParameter("img-code"))){
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(JSON.toJSONString(new JsonResult(false,"验证码错误-或者超时","/register.html")));
                 return ;
             }
         }
+        re.getSession().removeAttribute("image_code");
         chain.doFilter(request,response);
     }
 }

@@ -114,7 +114,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputImageCode">Code</label>
-                        <input type="text" id="inputImageCode" name="code" class="form-control" placeholder="Code" required>
+                        <input type="text" id="inputImageCode" name="img-code" class="form-control" placeholder="img-code" required>
                     </div>
 
                     <div class="form-group col-md-8">

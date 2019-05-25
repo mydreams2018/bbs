@@ -3,8 +3,6 @@ package cn.kungreat.bbs.config;
 import cn.kungreat.bbs.filter.AnotherImageFilter;
 import cn.kungreat.bbs.social.config.SocialProperties;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.google.code.kaptcha.util.Config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
@@ -14,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.context.request.RequestContextListener;
-
-import java.util.Properties;
 
 @Configuration
 public class BeanConfig {
@@ -32,7 +28,7 @@ public class BeanConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+ /*   @Bean
     public DefaultKaptcha defaultKaptcha(){
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
@@ -48,7 +44,7 @@ public class BeanConfig {
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
-    }
+    }*/
 
     @Bean
     public FilterRegistrationBean EKPSSOClientAuthentication() {
