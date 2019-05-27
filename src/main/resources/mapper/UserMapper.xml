@@ -59,4 +59,13 @@
           #{as}
       </foreach>
     </select>
+
+    <select id="selectCategoryTotal" resultType="cn.kungreat.bbs.vo.CategoryTotal">
+      SELECT count(*) as number , ${groupField} as categoryName  FROM user
+      GROUP BY ${groupField}
+    </select>
+
+  <select id="categoryNames" resultType="java.lang.String">
+      select origin_from FROM user GROUP BY origin_from
+  </select>
 </mapper>

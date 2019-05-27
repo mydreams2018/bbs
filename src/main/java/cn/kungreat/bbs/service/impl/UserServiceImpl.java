@@ -5,10 +5,14 @@ import cn.kungreat.bbs.domain.DataDetails;
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.User;
 import cn.kungreat.bbs.mapper.UserMapper;
+import cn.kungreat.bbs.query.UserQuery;
 import cn.kungreat.bbs.service.UserService;
+import cn.kungreat.bbs.vo.CategoryTotal;
 import com.alibaba.druid.util.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -23,6 +27,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Value("#{'${user.manager}'.split(',')}")
+    private List<String> manager;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
@@ -78,5 +84,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateImg(String account, String path) {
         return userMapper.updateImg(account,path);
+    }
+
+    @Override
+    public List<CategoryTotal> selectCategoryTotal(UserQuery query) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(manager.contains(name),"没有权限访问");
+        return userMapper.selectCategoryTotal(query);
+    }
+
+    @Override
+    public List<String> categoryNames() {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(manager.contains(name),"没有权限访问");
+        return userMapper.categoryNames();
     }
 }
