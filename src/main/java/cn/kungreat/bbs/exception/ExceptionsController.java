@@ -19,4 +19,12 @@ public class ExceptionsController {
         map.put("error",ex.getMessage());
         return map;
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public  Map<String,String> illegalArgumentException(IllegalArgumentException ex){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("error",ex.getMessage());
+        return map;
+    }
 }
