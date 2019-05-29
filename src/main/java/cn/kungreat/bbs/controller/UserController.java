@@ -1,14 +1,18 @@
 package cn.kungreat.bbs.controller;
 
 import cn.kungreat.bbs.domain.Permission;
+import cn.kungreat.bbs.domain.PermissionMapping;
 import cn.kungreat.bbs.query.UserQuery;
+import cn.kungreat.bbs.service.PermissionMappingService;
 import cn.kungreat.bbs.service.PermissionService;
 import cn.kungreat.bbs.service.UserService;
+import cn.kungreat.bbs.vo.JsonResult;
 import cn.kungreat.bbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
@@ -19,6 +23,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private PermissionService permissionService;
+    @Autowired
+    private PermissionMappingService permissionMappingService;
 
     @RequestMapping(value = "/listAndCensus")
     public String listAndCensus(UserQuery query,Model model){
@@ -50,5 +56,19 @@ public class UserController {
         model.addAttribute("allPS", permissions);
         model.addAttribute("aSize", aSize);
         return "userPermissions";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/savePermissions",method = RequestMethod.POST)
+    public JsonResult savePermissions(String account,List<PermissionMapping> record){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            permissionMappingService.insertBatch(record, account);
+            jsonResult.setMessage("success");
+        }catch (Exception e){
+            jsonResult.setMessage(e.getMessage());
+            jsonResult.setResult(false);
+        }
+        return jsonResult;
     }
 }

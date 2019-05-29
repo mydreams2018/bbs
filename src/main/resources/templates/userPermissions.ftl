@@ -10,6 +10,20 @@
     <script src="/js/jquery-3.4.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
+    <script type="text/javascript">
+        function savePermisions() {
+            var form = $("#save-ps");
+            $.ajax({
+                url: form.attr("action"),
+                type: form.attr("method"),
+                data: form.serialize(),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -51,14 +65,14 @@
 <div class="container justify-content-center" id="loop-img">
     <div class="row">
         <div class="col-sm">
-            <form action="" method="post">
+            <form action="/user/savePermissions" id="save-ps" method="post">
                 <div class="form-group">
                     <label for="staticEmail2" class="sr-only"></label>
-                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="${account!"BUG"}">
+                    <input type="text" name="account" readonly class="form-control-plaintext" id="staticEmail2" value="${account!"BUG"}">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">当前权限</label>
-                    <select multiple class="form-control" size="${PSize}" id="exampleFormControlSelect1">
+                    <select class="form-control" size="${PSize}" id="exampleFormControlSelect1">
                             <#if PS??>
                                 <#list PS as p>
                                     <option value="${p}">${p}</option>
@@ -67,13 +81,13 @@
                     </select>
 
                     <label for="exampleFormControlSelect2">所有权限</label>
-                    <select multiple class="form-control" size="${aSize}" id="exampleFormControlSelect2">
+                    <select multiple class="form-control" name="listPermission" size="${aSize}" id="exampleFormControlSelect2">
                           <#list allPS as item>
                               <option value="${item.descript}">${item.descript}</option>
                           </#list>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="savePermisions()" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
