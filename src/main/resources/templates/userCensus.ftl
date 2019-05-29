@@ -271,7 +271,7 @@
             for (x = 0; x < datas.length; x++){
                 var str = '<a class="dropdown-item" id="data-a-colne" href="#" data-toggle="tooltip" data-placement="top" title=""></a>';
                 var posts = $(str);
-                posts.prop("href", "/?id="+datas[x].id);
+                posts.prop("href", "/user/permissions?account="+datas[x].account);
                 posts.text(datas[x].account + ':'+ new Date(datas[x].registerTime).format("yyyy-MM-dd"));
                 posts.prop("title",datas[x].account);
                 $("#postsDatas").append(posts);

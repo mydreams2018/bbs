@@ -144,14 +144,6 @@
             });
 
         };
-
-        function showModal(obj) {
-            var oppose =$(obj).attr("data-oppose");
-            var sustain =$(obj).attr("data-sustain");
-            var text = '踩的人:'+oppose+'<br>'+'顶的人:'+sustain;
-            $("#user-sustain-oppose").html(text);
-            $("#modal-show").modal('show');
-        };
     </script>
 </head>
 <body>
@@ -252,8 +244,6 @@
                                         <#assign opposes = '无'>
                                     </#if>
                                 </a>
-                                <button  class="card-link btn-primary" data-sustain="${(sustains)!'无'}"
-                                         data-oppose="${(opposes)!'无'}" onclick="showModal(this)" >查</button>
 
                                 &nbsp; &nbsp; &nbsp;
                                 发布时间:${(data.publishTime)?string("yyyy-MM-dd HH:mm:ss")}
@@ -266,6 +256,16 @@
                                         <a href="javascript:editPosts(${(data.id)!})" class="card-link">修改内容</a>
                                     </#if>
                                 </#if>
+
+                                <a  data-toggle="collapse" href="#collapse${(data.id)!}" role="button" aria-expanded="false" aria-controls="collapse${(data.id)!}">
+                                    &nbsp; &nbsp;查:
+                                </a>
+                                <div class="collapse" id="collapse${(data.id)!}">
+                                    <div class="card card-body">
+                                        顶:${(sustains)!'无'}
+                                        踩:${(opposes)!'无'}
+                                    </div>
+                                </div>
                             </small>
                         </div>
                     </div>
@@ -305,27 +305,6 @@
         登录后发贴: <a href="/index" class="text-white">登录</a>
     </div>
 </#if>
-
-
-<div class="modal fade" tabindex="-1" role="dialog" id="modal-show" aria-hidden="true">
-       <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">顶:踩</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                </button>
-               </div>
-               <div class="modal-body" style="word-break:break-all" id="user-sustain-oppose">
-
-                </div>
-               <div class="modal-footer">
-                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-    </div>
-</div>
-
 
 <div class="row pading30 justify-content-end">
     <div class="col-md-6">

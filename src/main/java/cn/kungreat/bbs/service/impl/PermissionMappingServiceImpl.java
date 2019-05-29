@@ -19,11 +19,14 @@ public class PermissionMappingServiceImpl implements PermissionMappingService {
     private List<String> manager;
 
     @Transactional
-    public int insertBatch(List<PermissionMapping> record,String account) {
+    public int insertBatch(List<String> record,String account) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(manager.contains(name),"没有权限访问");
         permissionMappingMapper.deleteByAccount(account);
-        return  permissionMappingMapper.insertBatch(record);
+        if(record ==null || record.size() < 1){
+            return 0;
+        }
+        return  permissionMappingMapper.insertBatch(record,account);
     }
 
     @Override

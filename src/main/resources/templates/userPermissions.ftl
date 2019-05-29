@@ -13,13 +13,28 @@
     <script type="text/javascript">
         function savePermisions() {
             var form = $("#save-ps");
+            var selects = $('#exampleFormControlSelect2').val();
+            var account = $('#staticEmail2').val();
+            var ps='';
+            if (selects.length > 0) {
+                for(x =0;x<selects.length;x++){
+                    if(x == selects.length-1){
+                        ps = ps + selects[x];
+                    }else{
+                        ps = ps + selects[x]+",";
+                    }
+                }
+            }
             $.ajax({
                 url: form.attr("action"),
                 type: form.attr("method"),
-                data: form.serialize(),
+                data: {
+                    "listPermission":ps,
+                    "account":account
+                },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    alert(data.message);
                 }
             });
         }

@@ -1,7 +1,6 @@
 package cn.kungreat.bbs.controller;
 
 import cn.kungreat.bbs.domain.Permission;
-import cn.kungreat.bbs.domain.PermissionMapping;
 import cn.kungreat.bbs.query.UserQuery;
 import cn.kungreat.bbs.service.PermissionMappingService;
 import cn.kungreat.bbs.service.PermissionService;
@@ -14,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -60,10 +61,11 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/savePermissions",method = RequestMethod.POST)
-    public JsonResult savePermissions(String account,List<PermissionMapping> record){
+    public JsonResult savePermissions(String account,String listPermission){
         JsonResult jsonResult = new JsonResult();
         try {
-            permissionMappingService.insertBatch(record, account);
+            String[] st = listPermission.trim().split(",");
+            permissionMappingService.insertBatch(Arrays.asList(st),account);
             jsonResult.setMessage("success");
         }catch (Exception e){
             jsonResult.setMessage(e.getMessage());

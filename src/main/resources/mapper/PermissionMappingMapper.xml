@@ -10,7 +10,7 @@
   <insert id="insertBatch">
     insert into permission_mapping (account, descript) values
       <foreach collection="ps" item="var" separator=",">
-        (#{var.account},#{var.descript})
+        (#{account},#{var})
       </foreach>
   </insert>
 
