@@ -8,8 +8,8 @@ import cn.kungreat.bbs.mapper.UserMapper;
 import cn.kungreat.bbs.query.UserQuery;
 import cn.kungreat.bbs.service.UserService;
 import cn.kungreat.bbs.vo.CategoryTotal;
+import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,11 +43,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectByPrimaryKey(String account) {
         return userMapper.selectByPrimaryKey(account);
-    }
-
-    @Override
-    public List<User> selectAll() {
-        return userMapper.selectAll();
     }
 
     @Override
@@ -98,5 +89,21 @@ public class UserServiceImpl implements UserService {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(manager.contains(name),"没有权限访问");
         return userMapper.categoryNames();
+    }
+
+    @Override
+    public QueryResult query(UserQuery query) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Assert.isTrue(manager.contains(name),"没有权限访问");
+        long count = userMapper.selectCount(query);
+        List list  = Collections.emptyList();
+        if (count >  0){
+            list = userMapper.selectAll(query);
+        }
+        query.setData(count,query.getPageSize(),query.getCurrentPage());
+        QueryResult  result = new QueryResult();
+        result.setDatas(list);
+        result.setPage(query);
+        return result;
     }
 }

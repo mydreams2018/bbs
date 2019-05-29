@@ -9,6 +9,7 @@ public class MySpringSocialConfigurer extends SpringSocialConfigurer {
     protected <T> T postProcess(T object) {
         SocialAuthenticationFilter  filter  = (SocialAuthenticationFilter) super.postProcess(object);
         filter.setFilterProcessesUrl("/auth");
+        filter.setAuthenticationSuccessHandler(new MySuccessHandler());
         return (T)filter;
     }
 }

@@ -15,6 +15,26 @@
         function changeCategory(obj) {
             window.location.replace("/user/listAndCensus?groupField="+obj);
         };
+        Date.prototype.format = function(fmt) {
+            var o = {
+                "M+" : this.getMonth()+1,                 //月份
+                "d+" : this.getDate(),                    //日
+                "h+" : this.getHours(),                   //小时
+                "m+" : this.getMinutes(),                 //分
+                "s+" : this.getSeconds(),                 //秒
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度
+                "S"  : this.getMilliseconds()             //毫秒
+            };
+            if(/(y+)/.test(fmt)) {
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            }
+            for(var k in o) {
+                if(new RegExp("("+ k +")").test(fmt)){
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt;
+        };
     </script>
 
 </head>
@@ -57,7 +77,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm btn-group">
+        <div class="col-md btn-group">
             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 统计人数
             </button>
@@ -69,7 +89,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm">
+        <div class="col-md">
             <div id="echartsUser"  style="height:390px">
 
             </div>
@@ -83,17 +103,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <select class="nav-item" id="select-type" onchange="selectChange(this)">
-                            <option value="0">所有类型</option>
+                            <option value="">所有类型</option>
                         </select>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                日期排序
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="javascript:orderDatas('0')">正序</a>
-                                <a class="dropdown-item" href="javascript:orderDatas('1')">倒序</a>
-                            </div>
-                        </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" id="searchData" type="text" placeholder="Search" aria-label="Search">
@@ -101,6 +112,11 @@
                     </form>
                 </div>
             </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md" id="postsDatas">
         </div>
     </div>
 
@@ -167,23 +183,17 @@
         ]
     };
 
-    var orderField = "";
-    var category = 0;
+    var category = "";
     var searchKeyword = "";
 
     function selectChange(obj) {
         category = $(obj).val();
-        alert(category);
-    };
-
-    function orderDatas(obj) {
-        orderField = obj;
-        alert(orderField);
+        sendAjax();
     };
 
     function searchClick() {
         searchKeyword = $("#searchData").val();
-        alert(searchKeyword);
+        sendAjax();
     };
 
     $(document).ready(function(){
@@ -205,7 +215,89 @@
             }
         });
 
+        sendAjax();
     });
+
+    function sendAjax() {
+        $.ajax({
+            url: "/user/list",
+            type: "post",
+            dataType: "json",
+            data:{
+                "category":category,
+                "searchKeyword":searchKeyword
+            },
+            beforeSend: function () {
+                $("#postsDatas").empty();
+                $("#page-last").parent("li").removeClass("disabled");
+                $("#page-next").parent("li").removeClass("disabled");
+                $("#page-end").parent("li").removeClass("disabled");
+                $("#page-top").parent("li").removeClass("disabled");
+            },
+            success: function (data) {
+                getCurrentDatas(data);
+            }
+        });
+    };
+
+    function pageChange(obj) {
+        var currentPage = $("#"+obj).attr("data-crt");
+        if(currentPage){
+            $.ajax({
+                url: "/user/list",
+                type: "post",
+                dataType: "json",
+                data: {"currentPage":currentPage,
+                    "category":category,
+                    "searchKeyword":searchKeyword
+                },
+                beforeSend: function () {
+                    $("#postsDatas").empty();
+                    $("#page-last").parent("li").removeClass("disabled");
+                    $("#page-next").parent("li").removeClass("disabled");
+                    $("#page-end").parent("li").removeClass("disabled");
+                    $("#page-top").parent("li").removeClass("disabled");
+                },
+                success: function (data) {
+                    getCurrentDatas(data);
+                }
+            });
+        }
+    };
+
+    function getCurrentDatas(data) {
+        if(data.datas.length > 0){
+            var datas = data.datas;
+            for (x = 0; x < datas.length; x++){
+                var str = '<a class="dropdown-item" id="data-a-colne" href="#" data-toggle="tooltip" data-placement="top" title=""></a>';
+                var posts = $(str);
+                posts.prop("href", "/?id="+datas[x].id);
+                posts.text(datas[x].account + ':'+ new Date(datas[x].registerTime).format("yyyy-MM-dd"));
+                posts.prop("title",datas[x].account);
+                $("#postsDatas").append(posts);
+            }
+        }
+        if(data.page){
+            var page = data.page;
+            $("#page-last").attr("data-crt",page.lastPage);
+            $("#page-next").attr("data-crt",page.nextPage);
+            $("#page-end").attr("data-crt",page.endPage);
+            $("#current-page").text("当前页:"+page.currentPage);
+            $("#total-page").text("总共页:"+page.totalPage);
+            if(page.currentPage == page.lastPage){
+                $("#page-last").parent("li").addClass("disabled");
+            }
+            if(page.currentPage == page.nextPage){
+                $("#page-next").parent("li").addClass("disabled");
+            }
+            if(page.currentPage == page.endPage){
+                $("#page-end").parent("li").addClass("disabled");
+            }
+            if(page.currentPage == 1){
+                $("#page-top").parent("li").addClass("disabled");
+            }
+        }
+    };
 </script>
 </body>
 </html>

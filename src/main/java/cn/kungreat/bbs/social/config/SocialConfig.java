@@ -14,7 +14,6 @@ import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -33,7 +32,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-        JdbcUsersConnectionRepository jdbcUsersConnectionRepository = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+        Jdbc8UsersConnectionRepository jdbcUsersConnectionRepository = new Jdbc8UsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
         if(myConnectionSignUp != null){
             jdbcUsersConnectionRepository.setConnectionSignUp(myConnectionSignUp);
         }

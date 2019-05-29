@@ -1,7 +1,10 @@
 package cn.kungreat.bbs.controller;
 
+import cn.kungreat.bbs.domain.Permission;
 import cn.kungreat.bbs.query.UserQuery;
+import cn.kungreat.bbs.service.PermissionService;
 import cn.kungreat.bbs.service.UserService;
+import cn.kungreat.bbs.vo.QueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private PermissionService permissionService;
 
     @RequestMapping(value = "/listAndCensus")
     public String listAndCensus(UserQuery query,Model model){
@@ -27,4 +32,23 @@ public class UserController {
         return userService.categoryNames();
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/list")
+    public QueryResult  list(UserQuery query){
+        return userService.query(query);
+    }
+
+    @RequestMapping(value = "/permissions")
+    public String permissions(String account,Model model){
+        model.addAttribute("account",account);
+        List<String> strings = permissionService.selectPermissions(account);
+        int pSize = strings==null?0:strings.size();
+        List<Permission> permissions = permissionService.selectAll();
+        int aSize = permissions==null?0:permissions.size();
+        model.addAttribute("PS", strings);
+        model.addAttribute("PSize", pSize);
+        model.addAttribute("allPS", permissions);
+        model.addAttribute("aSize", aSize);
+        return "userPermissions";
+    }
 }

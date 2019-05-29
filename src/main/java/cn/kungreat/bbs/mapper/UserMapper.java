@@ -13,7 +13,9 @@ public interface UserMapper {
 
     User selectByPrimaryKey(String account);
 
-    List<User> selectAll();
+    List<User> selectAll(UserQuery query);
+    long selectCount(UserQuery query);
+
     List<User> selectByAccounts(@Param("acts") List<String> acts);
     int updateByPrimaryKey(User record);
 

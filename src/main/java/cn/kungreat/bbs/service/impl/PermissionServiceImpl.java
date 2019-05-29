@@ -1,5 +1,6 @@
 package cn.kungreat.bbs.service.impl;
 
+import cn.kungreat.bbs.domain.Permission;
 import cn.kungreat.bbs.mapper.PermissionMapper;
 import cn.kungreat.bbs.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<String> selectPermissions(String account) {
         return permissionMapper.selectPermissions(account);
+    }
+
+    @Override
+    public List<Permission> selectAll() {
+        return permissionMapper.selectAll();
     }
 }

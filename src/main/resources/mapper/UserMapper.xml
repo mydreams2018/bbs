@@ -46,9 +46,14 @@
     from user
     where account = #{0}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon, origin_from, register_year
+    select id, account, password, alias, phone, img, is_vip, state, email,
+      description, register_time, icon, origin_from, register_year
     from user
+    <include refid="baseQuery"/>
+    ORDER BY register_time DESC
+    limit #{start},#{pageSize}
   </select>
 
     <select id="selectByAccounts" resultMap="BaseResultMap">
@@ -68,4 +73,20 @@
   <select id="categoryNames" resultType="java.lang.String">
       select origin_from FROM user GROUP BY origin_from
   </select>
+
+  <select id="selectCount" resultType="java.lang.Long">
+     select count(*) from user
+     <include refid="baseQuery"/>
+  </select>
+
+  <sql id="baseQuery">
+    <where>
+      <if test="category != null and category != '' ">
+        and origin_from = #{category}
+      </if>
+      <if test="searchKeyword != null and searchKeyword != '' ">
+        and account like concat("%",#{searchKeyword},"%")
+      </if>
+    </where>
+  </sql>
 </mapper>
