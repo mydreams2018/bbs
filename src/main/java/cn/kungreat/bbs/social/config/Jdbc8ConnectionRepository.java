@@ -148,8 +148,8 @@ class Jdbc8ConnectionRepository implements ConnectionRepository {
     public void addConnection(Connection<?> connection) {
         try {
             ConnectionData data = connection.createData();
-            int rk = jdbcTemplate.queryForObject("select coalesce(max(rankNum) + 1, 1) as rankNum from " + tablePrefix + "UserConnection where userId = ? and providerId = ?", new Object[]{ userId, data.getProviderId() }, Integer.class);
-            jdbcTemplate.update("insert into " + tablePrefix + "UserConnection (userId, providerId, providerUserId, rankNum, displayName, profileUrl, imageUrl, accessToken, secret, refreshToken, expireTime) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            int rk = jdbcTemplate.queryForObject("select coalesce(max(rankNum) + 1, 1) as rankNum from " + tablePrefix + "userconnection where userId = ? and providerId = ?", new Object[]{ userId, data.getProviderId() }, Integer.class);
+            jdbcTemplate.update("insert into " + tablePrefix + "userconnection (userId, providerId, providerUserId, rankNum, displayName, profileUrl, imageUrl, accessToken, secret, refreshToken, expireTime) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     userId, data.getProviderId(), data.getProviderUserId(), rk, data.getDisplayName(), data.getProfileUrl(), data.getImageUrl(), encrypt(data.getAccessToken()), encrypt(data.getSecret()), encrypt(data.getRefreshToken()), data.getExpireTime());
         } catch (DuplicateKeyException e) {
             throw new DuplicateConnectionException(connection.getKey());
@@ -159,24 +159,24 @@ class Jdbc8ConnectionRepository implements ConnectionRepository {
     @Transactional
     public void updateConnection(Connection<?> connection) {
         ConnectionData data = connection.createData();
-        jdbcTemplate.update("update " + tablePrefix + "UserConnection set displayName = ?, profileUrl = ?, imageUrl = ?, accessToken = ?, secret = ?, refreshToken = ?, expireTime = ? where userId = ? and providerId = ? and providerUserId = ?",
+        jdbcTemplate.update("update " + tablePrefix + "userconnection set displayName = ?, profileUrl = ?, imageUrl = ?, accessToken = ?, secret = ?, refreshToken = ?, expireTime = ? where userId = ? and providerId = ? and providerUserId = ?",
                 data.getDisplayName(), data.getProfileUrl(), data.getImageUrl(), encrypt(data.getAccessToken()), encrypt(data.getSecret()), encrypt(data.getRefreshToken()), data.getExpireTime(), userId, data.getProviderId(), data.getProviderUserId());
     }
 
     @Transactional
     public void removeConnections(String providerId) {
-        jdbcTemplate.update("delete from " + tablePrefix + "UserConnection where userId = ? and providerId = ?", userId, providerId);
+        jdbcTemplate.update("delete from " + tablePrefix + "userconnection where userId = ? and providerId = ?", userId, providerId);
     }
 
     @Transactional
     public void removeConnection(ConnectionKey connectionKey) {
-        jdbcTemplate.update("delete from " + tablePrefix + "UserConnection where userId = ? and providerId = ? and providerUserId = ?", userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        jdbcTemplate.update("delete from " + tablePrefix + "userconnection where userId = ? and providerId = ? and providerUserId = ?", userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
     }
 
     // internal helpers
 
     private String selectFromUserConnection() {
-        return "select userId, providerId, providerUserId, displayName, profileUrl, imageUrl, accessToken, secret, refreshToken, expireTime from " + tablePrefix + "UserConnection";
+        return "select userId, providerId, providerUserId, displayName, profileUrl, imageUrl, accessToken, secret, refreshToken, expireTime from " + tablePrefix + "userconnection";
     }
 
     private Connection<?> findPrimaryConnection(String providerId) {
