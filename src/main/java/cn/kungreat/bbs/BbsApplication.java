@@ -1,12 +1,8 @@
 package cn.kungreat.bbs;
 
-import org.apache.catalina.connector.Connector;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
@@ -18,7 +14,7 @@ public class BbsApplication {
 		SpringApplication.run(BbsApplication.class, args);
 	}
 
-	@Bean
+/*	@Bean
 	public ServletWebServerFactory servletContainer() {
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
 		tomcat.addAdditionalTomcatConnectors(createConnector());
@@ -38,5 +34,5 @@ public class BbsApplication {
 			throw new IllegalStateException("can't access keystore: [" + "keystore"
 					+ "] or truststore: [" + "keystore" + "]", ex);
 		}
-	}
+	}*/
 }
