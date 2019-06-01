@@ -163,11 +163,13 @@
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                     <a class="btn btn-primary" href="/accountPosts.html?account=${(userDetail.account)!}" role="button">java跳转</a>
                     <a class="btn btn-primary" href="/assembler/accountPosts.html?account=${(userDetail.account)!}" role="button">汇编跳转</a>
+                    <a class="btn btn-primary" href="/data/accountPosts.html?account=${(userDetail.account)!}" role="button">数据跳转</a>
                 </div>
 
                 <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
                     <a class="btn btn-primary" href="/accountReplyPosts.html?account=${(userDetail.account)!}" role="button">java跳转</a>
                     <a class="btn btn-primary" href="/assembler/accountReplyPosts.html?account=${(userDetail.account)!}" role="button">汇编跳转</a>
+                    <a class="btn btn-primary" href="/data/accountReplyPosts.html?account=${(userDetail.account)!}" role="button">数据跳转</a>
                 </div>
 
                 <div class="tab-pane fade" id="list-money" role="tabpanel" aria-labelledby="list-money-list">
