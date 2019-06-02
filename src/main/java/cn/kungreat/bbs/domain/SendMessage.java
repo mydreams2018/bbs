@@ -22,6 +22,10 @@ public class SendMessage {
     private String fromImg;
     private String toImg;
 
+    public void setMessage(String message) {
+        this.message = message.trim();
+    }
+
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
         if(StringUtils.isEmpty(toAccount)){

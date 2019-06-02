@@ -23,6 +23,10 @@ public class MessageDetails {
 
     private Integer isMain=0;
 
+    public void setMessageDetails(String messageDetails) {
+        this.messageDetails = messageDetails.trim();
+    }
+
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
         if(StringUtils.isEmpty(messageDetails)){
