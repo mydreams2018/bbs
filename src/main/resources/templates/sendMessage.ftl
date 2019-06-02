@@ -5,54 +5,36 @@
     <meta name="description" content="编程技术">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>编程技术</title>
-    <link rel="stylesheet" href="/css/bootstarp/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstarp/bootstrap.min.css" >
     <link href="/css/album.css" rel="stylesheet">
-    <script src="/js/jquery-3.4.0.min.js" ></script>
+    <script src="/js/jquery-3.4.0.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
     <script type="text/javascript">
-        $(function(){
-            $("#join_as").bind("click",function () {
-                window.location.replace("/register.html");
-            });
-        });
-        function flushImg(obj) {
-            obj.src = "/image?time="+Math.random();
-        };
-
-        function qqLogin() {
-            window.location.replace("/auth/qq");
-        };
-
-        function check(){
-            var name = $("#inputAccount").val();
-            var pd = $("#inputPassword").val();
-            var code = $("#inputImageCode").val();
-            if(name.length < 6 || pd.length < 6){
-                alert("用户-密码长度不能小于6");
+        function sendMessage() {
+            var form = $("#send-message");
+            var vu = $("#exampleFormControlTextarea1").val();
+            if(vu.length > 160){
+                alert("信息过大,请重新输入简要信息");
                 return ;
             }
-            ajaxSend();
-        };
-        function ajaxSend() {
-            var form = $("#sign_in");
             $.ajax({
                 url: form.attr("action"),
                 type: form.attr("method"),
                 data: form.serialize(),
                 dataType: "json",
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
                 success: function (data) {
                     if(data.result){
+                        alert(data.message);
                         window.location.replace(data.path);
                     }else{
                         alert(data.message);
                     }
                 }
             });
+        };
+        function flushImg(obj) {
+            obj.src = "/image?time="+Math.random();
         };
     </script>
 </head>
@@ -93,41 +75,44 @@
     </div>
 </header>
 
-<div class="row justify-content-center">
-    <div class="col-md-3">
-        <form action="/defaultLogin" method="post" id="sign_in">
-            <div class="form-group">
-                <label for="inputAccount">Account</label>
-                <input type="text" id="inputAccount" name="username" class="form-control" placeholder="Account" required autofocus>
-            </div>
-
-            <div class="form-group">
-                <label for="inputPassword">Password</label>
-                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="inputImageCode">Code</label>
-                <input type="text" id="inputImageCode" name="img-code" class="form-control" placeholder="img-code" required>
-            </div>
-
-            <div class="form-group">
-                <img src="/image" onclick="flushImg(this)" class="img-fluid">
-            </div>
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">Sign in</button>
-            <button class="btn btn-lg btn-primary btn-block" type="button" id="join_as">Join as</button>
-            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="qqLogin()" >
-                <img class="img-fluid" src="/userImg/qq.png" style="height: 32px">
-            </button>
-        </form>
-    </div>
+<div class="container">
+            <form action="/sendMessage/save" method="post" id="send-message">
+                    <div class="form-group row">
+                        <label for="staticName" class="col-md-2 col-form-label">用户:</label>
+                        <div class="col-md-10">
+                            <input type="text" name="toAccount" readonly class="form-control-plaintext" id="staticName"
+                                   value="${(toUser.account)!'BUG'}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleFormControlTextarea1" class="col-md-2 col-form-label">信息:</label>
+                        <div class="col-md-10">
+                             <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3">
+                             </textarea>
+                        </div>
+                    </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputImageCode">code</label>
+                        <input type="text" id="inputImageCode" name="img-code" class="form-control" placeholder="img-code" required>
+                    </div>
+                    <div class="form-group col-md-10">
+                        <img src="/image" onclick="flushImg(this)" alt="鲲" id="image_flush" style="height: 76px" class="img-fluid form-control">
+                    </div>
+                </div>
+                  <button type="button" onclick="sendMessage()" class="btn btn-primary">发送</button>
+            </form>
 </div>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>邮箱:mydreams2018@outlook.com</p>
+        <p>粤ICP备19055569号</p>
+    </div>
+</footer>
 
 </body>
 </html>

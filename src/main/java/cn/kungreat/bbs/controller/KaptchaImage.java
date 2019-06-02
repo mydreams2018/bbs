@@ -36,7 +36,7 @@ public class KaptchaImage {
 
     @RequestMapping(value = "/image")
     public ModelAndView image2(HttpServletRequest request, HttpServletResponse response){
-        String randomStr = RandomStringUtils.randomAlphabetic(6).toLowerCase();
+        String randomStr = RandomStringUtils.randomAlphabetic(4).toLowerCase();
         request.getSession().setAttribute("image_code", randomStr);
         request.getSession().setAttribute("time", new Date().getTime());
         BufferedImage bi = new Captcha().generate(453, 68, randomStr).getImage();

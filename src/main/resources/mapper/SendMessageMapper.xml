@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.bbs.mapper.SendMessageMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.SendMessage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="from_account" jdbcType="VARCHAR" property="fromAccount" />
+    <result column="to_account" jdbcType="VARCHAR" property="toAccount" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+    <result column="from_img" property="fromImg" />
+    <result column="to_img" property="toImg" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from send_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.SendMessage" useGeneratedKeys="true">
+    insert into send_message (from_account, to_account, message, 
+      send_time, from_img, to_img)
+    values (#{fromAccount,jdbcType=VARCHAR}, #{toAccount,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{fromImg}, #{toImg})
+  </insert>
+  <update id="updateByPrimaryKey">
+    update send_message
+    set message = #{message,jdbcType=VARCHAR}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, from_account, to_account, message, send_time, from_img, to_img
+    from send_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, from_account, to_account, message, send_time, from_img, to_img
+    from send_message
+    <include refid="baseQuery"/>
+     order by id desc
+    limit #{start},#{pageSize}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Long">
+    select count(*) from send_message
+    <include refid="baseQuery"/>
+  </select>
+
+  <select id="selectByUnique" resultMap="BaseResultMap">
+    select id, from_account, to_account, message, send_time, from_img, to_img
+    from send_message
+    where from_account = #{from} and to_account = #{to}
+  </select>
+
+  <sql id="baseQuery">
+    <where>
+       <if test="fromAccount != null and fromAccount != ''">
+         and from_account = #{fromAccount}
+       </if>
+      <if test="toAccount != null and toAccount != ''">
+         and to_account = #{toAccount}
+      </if>
+    </where>
+  </sql>
+</mapper>

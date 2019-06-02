@@ -25,8 +25,10 @@ public class Paging {
 			this.endPage = this.totalPage;
 			this.currentPage = currentpage > this.endPage?this.endPage:currentpage;
 		}
-		this.lastPage = (currentpage-1L) > 0?currentpage-1L :currentpage ;
-		this.nextPage = currentpage < this.totalPage?currentpage+1L:currentpage;
+//		this.lastPage = (currentpage-1L) > 0?currentpage-1L :currentpage ;
+//		this.nextPage = currentpage < this.totalPage?currentpage+1L:currentpage;
+		this.lastPage = (this.currentPage-1L) > 0 ? this.currentPage-1L : this.currentPage;
+		this.nextPage = this.currentPage < this.totalPage ? this.currentPage + 1L : this.currentPage;
 	}
 	
 	public Long getStart() {

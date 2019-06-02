@@ -208,6 +208,8 @@
                                     <#else>
                                         BUG用户
                                     </#if>
+                                    &nbsp; &nbsp;
+                                    <a href="/sendMessage/send?toAccount=${(postsUsers[data_index].account)!}">私信:</a>
                                 </small>
                             </div>
                     </div>

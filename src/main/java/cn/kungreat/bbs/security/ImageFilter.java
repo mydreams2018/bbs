@@ -39,6 +39,7 @@ public class ImageFilter extends OncePerRequestFilter {
                 ||"/assemblerDetails/updateSave".equals(requestURI) || "/assemblerDetails/save".equals(requestURI)
                 ||"/dataPosts/updatePosts".equals(requestURI) || "/dataPosts/save".equals(requestURI)
                 ||"/dataDetails/updateSave".equals(requestURI) || "/dataDetails/save".equals(requestURI)
+                || "/messageDetails/save".equals(requestURI) ||  "/sendMessage/save".equals(requestURI)
         ){
             Object code = re.getSession().getAttribute("image_code");
             long seconds = 90000;

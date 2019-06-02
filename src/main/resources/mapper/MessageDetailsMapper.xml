@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kungreat.bbs.mapper.MessageDetailsMapper">
+  <resultMap id="BaseResultMap" type="cn.kungreat.bbs.domain.MessageDetails">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="message_details" jdbcType="VARCHAR" property="messageDetails" />
+    <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+    <result column="message_id" jdbcType="BIGINT" property="messageId" />
+    <result column="publish_time" property="publishTime" />
+    <result column="is_main" property="isMain" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from message_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByMessageId">
+      delete from message_details
+    where message_id = #{0}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kungreat.bbs.domain.MessageDetails" useGeneratedKeys="true">
+    insert into message_details (account, message_details, img_path, 
+      message_id, publish_time, is_main)
+    values (#{account,jdbcType=VARCHAR}, #{messageDetails,jdbcType=VARCHAR}, #{imgPath,jdbcType=VARCHAR}, 
+      #{messageId,jdbcType=BIGINT}, #{publishTime}, #{isMain})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.kungreat.bbs.domain.MessageDetails">
+    update message_details
+    set message_details = #{messageDetails}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, account, message_details, img_path, message_id, publish_time, is_main
+    from message_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, account, message_details, img_path, message_id, publish_time, is_main
+    from message_details
+    where message_id = #{messageId}
+    order by id
+    limit #{start},#{pageSize}
+  </select>
+  <select id="selectCount" resultType="java.lang.Long">
+    select count(*) from message_details where message_id = #{messageId}
+  </select>
+</mapper>

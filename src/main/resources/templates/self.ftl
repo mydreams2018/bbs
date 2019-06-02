@@ -122,7 +122,7 @@
                 <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">个人资料</a>
                 <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">个人发贴</a>
                 <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">个人跟贴</a>
-                <a class="list-group-item list-group-item-action" id="list-money-list" data-toggle="list" href="#list-money" role="tab" aria-controls="moneys">个人金钱</a>
+                <a class="list-group-item list-group-item-action" id="list-message-list" data-toggle="list" href="#list-message" role="tab" aria-controls="messages">个人私信</a>
             </div>
         </div>
         <div class="col-sm-8">
@@ -172,8 +172,9 @@
                     <a class="btn btn-primary" href="/data/accountReplyPosts.html?account=${(userDetail.account)!}" role="button">数据跳转</a>
                 </div>
 
-                <div class="tab-pane fade" id="list-money" role="tabpanel" aria-labelledby="list-money-list">
-                    money
+                <div class="tab-pane fade" id="list-message" role="tabpanel" aria-labelledby="list-message-list">
+                    <a class="btn btn-primary" href="/sendMessage/from" role="button">我发送的</a>
+                    <a class="btn btn-primary" href="/sendMessage/to" role="button">我接收的</a>
                 </div>
             </div>
         </div>
