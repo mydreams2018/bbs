@@ -8,6 +8,7 @@ import cn.kungreat.bbs.query.AssemblerDetailsQuery;
 import cn.kungreat.bbs.query.AssemblerPostsQuery;
 import cn.kungreat.bbs.service.AssemblerDetailsService;
 import cn.kungreat.bbs.service.AssemblerPostsService;
+import cn.kungreat.bbs.service.UserService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ import java.util.List;
 
 @Service
 public class AssemblerPostsServiceImpl implements AssemblerPostsService {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private AssemblerPostsMapper assemblerPostsMapper;
     @Autowired
@@ -65,6 +67,8 @@ public class AssemblerPostsServiceImpl implements AssemblerPostsService {
         Date date = new Date();
         record.setPublishTime(date);
         assemblerPostsMapper.insert(record);
+        int i = userService.updateAccumulatePoints(30, account);
+        Assert.isTrue(i>0,"并发修改积分错误,重测");
         AssemblerDetails assemblerDetails = new AssemblerDetails();
         assemblerDetails.setAccount(account);
         assemblerDetails.setPostsId(record.getId());

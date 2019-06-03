@@ -92,6 +92,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updateAccumulatePoints(int number, String account) {
+        User user = userMapper.selectByPrimaryKey(account);
+        int current = user.getAccumulatePoints() + number;
+        return userMapper.updateAccumulatePoints(current,user.getAccumulatePoints(),account);
+    }
+
+    @Override
     public QueryResult query(UserQuery query) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(manager.contains(name),"没有权限访问");

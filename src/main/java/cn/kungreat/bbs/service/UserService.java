@@ -18,6 +18,6 @@ public interface UserService {
     List<CategoryTotal> selectCategoryTotal(UserQuery query);
 
     List<String> categoryNames();
-
+    int updateAccumulatePoints(int number,String account);
     QueryResult query(UserQuery query);
 }

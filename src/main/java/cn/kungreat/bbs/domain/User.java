@@ -41,6 +41,16 @@ public class User {
         if(StringUtils.isEmpty(password) || password.length() < 6){
             builder.append("密码不能为空-不能小于6位数");
         }
+        byte[] bytes = account.getBytes();
+        for(int x =0;x<bytes.length;x++){
+            if(bytes[x] > 47 && bytes[x] < 58 || bytes[x] > 64 && bytes[x] < 91
+                    || bytes[x] > 96 && bytes[x] < 123){
+
+            }else{
+                builder.append("账户只能是字母和数字");
+                break;
+            }
+        }
         return builder.toString();
     }
 }

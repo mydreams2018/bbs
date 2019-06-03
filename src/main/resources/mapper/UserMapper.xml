@@ -43,7 +43,13 @@
       where account = #{account}
     </update>
 
-    <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+  <update id="updateAccumulatePoints">
+    update user
+    set accumulate_points = #{current}
+    where account = #{account} and accumulate_points =  #{original}
+  </update>
+
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
     select id, account, password, alias, phone, img, is_vip, state, email, description, register_time, icon,
       origin_from, register_year, accumulate_points
     from user

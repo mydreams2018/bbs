@@ -5,6 +5,7 @@ import cn.kungreat.bbs.domain.AssemblerDetailsRecord;
 import cn.kungreat.bbs.mapper.AssemblerDetailsMapper;
 import cn.kungreat.bbs.mapper.AssemblerDetailsRecordMapper;
 import cn.kungreat.bbs.service.AssemblerDetailsRecordService;
+import cn.kungreat.bbs.service.UserService;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,14 +22,23 @@ public class AssemblerDetailsRecordServiceImpl implements AssemblerDetailsRecord
     private AssemblerDetailsRecordMapper assemblerDetailsRecordMapper;
     @Autowired
     private AssemblerDetailsMapper assemblerDetailsMapper;
-
+    @Autowired
+    private UserService userService;
     @Transactional
     public int insert(AssemblerDetailsRecord record) {
         Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setAccount(account);
         Assert.isTrue(assemblerDetailsRecordMapper.selectByPrimary(record)==null,"请不要重复操作");
-        record.setPostsId(assemblerDetailsMapper.selectByPrimaryId(record.getAssemblerDetailsId()).getPostsId());
+        AssemblerDetails assemblerDetails = assemblerDetailsMapper.selectByPrimaryId(record.getAssemblerDetailsId());
+        record.setPostsId(assemblerDetails.getPostsId());
+        if(record.getState()){
+            int i = userService.updateAccumulatePoints(5, assemblerDetails.getAccount());
+            Assert.isTrue(i>0,"并发修改积分错误,请重试");
+        }else{
+            int i = userService.updateAccumulatePoints(-5, assemblerDetails.getAccount());
+            Assert.isTrue(i>0,"并发修改积分错误,请重试");
+        }
         return assemblerDetailsRecordMapper.insert(record);
     }
 

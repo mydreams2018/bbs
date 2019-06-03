@@ -8,6 +8,7 @@ import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.query.JavaPostsQuery;
 import cn.kungreat.bbs.service.JavaDetailsService;
 import cn.kungreat.bbs.service.JavaPostsService;
+import cn.kungreat.bbs.service.UserService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ import java.util.List;
 
 @Service
 public class JavaPostsServiceImpl implements JavaPostsService {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private JavaPostsMapper javaPostsMapper;
     @Autowired
@@ -65,6 +67,8 @@ public class JavaPostsServiceImpl implements JavaPostsService {
         Date date = new Date();
         record.setPublishTime(date);
         javaPostsMapper.insert(record);
+        int i = userService.updateAccumulatePoints(30, account);
+        Assert.isTrue(i>0,"并发修改积分出现问题,请重试");
         JavaDetails javaDetails = new JavaDetails();
         javaDetails.setAccount(account);
         javaDetails.setPostsId(record.getId());

@@ -8,6 +8,7 @@ import cn.kungreat.bbs.mapper.JavaPostsMapper;
 import cn.kungreat.bbs.query.JavaDetailsQuery;
 import cn.kungreat.bbs.service.JavaDetailsService;
 import cn.kungreat.bbs.service.JavaPostsService;
+import cn.kungreat.bbs.service.UserService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import java.util.List;
 @Service
 public class JavaDetailsServiceImpl implements JavaDetailsService {
     @Autowired
+    private UserService userService;
+    @Autowired
     private JavaDetailsMapper javaDetailsMapper;
     @Autowired
     private JavaPostsMapper javaPostsMapper;
@@ -37,6 +40,8 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         record.setAccount(account);
         record.setPublishTime(new Date());
         javaDetailsMapper.insert(record);
+        int i = userService.updateAccumulatePoints(10, account);
+        Assert.isTrue(i > 0,"并发修改积分出现错误,请重新提交");
         JavaPosts javaPosts = javaPostsMapper.selectByPrimaryKey(record.getPostsId());
         Assert.isTrue(javaPosts!=null,"数据异常");
         javaPosts.setReplyTimeEnd(new Date());

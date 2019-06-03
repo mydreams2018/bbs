@@ -5,6 +5,7 @@ import cn.kungreat.bbs.domain.JavaDetailsRecord;
 import cn.kungreat.bbs.mapper.JavaDetailsMapper;
 import cn.kungreat.bbs.mapper.JavaDetailsRecordMapper;
 import cn.kungreat.bbs.service.JavaDetailsRecordService;
+import cn.kungreat.bbs.service.UserService;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,8 @@ import java.util.List;
 @Service
 public class JavaDetailsRecordServiceImpl implements JavaDetailsRecordService {
     @Autowired
+    private UserService userService;
+    @Autowired
     private JavaDetailsRecordMapper javaDetailsRecordMapper;
     @Autowired
     private JavaDetailsMapper javaDetailsMapper;
@@ -26,7 +29,15 @@ public class JavaDetailsRecordServiceImpl implements JavaDetailsRecordService {
         String account = SecurityContextHolder.getContext().getAuthentication().getName();
         record.setAccount(account);
         Assert.isTrue(javaDetailsRecordMapper.selectByPrimary(record)==null,"请不要重复操作");
-        record.setPostsId(javaDetailsMapper.selectByPrimaryId(record.getJavaDetailsId()).getPostsId());
+        JavaDetails javaDetails = javaDetailsMapper.selectByPrimaryId(record.getJavaDetailsId());
+        record.setPostsId(javaDetails.getPostsId());
+        if(record.getState()){
+            int i = userService.updateAccumulatePoints(5, javaDetails.getAccount());
+            Assert.isTrue(i>0,"并发修改积分错误,请重试");
+        }else{
+            int i = userService.updateAccumulatePoints(-5, javaDetails.getAccount());
+            Assert.isTrue(i>0,"并发修改积分错误,请重试");
+        }
         return javaDetailsRecordMapper.insert(record);
     }
 

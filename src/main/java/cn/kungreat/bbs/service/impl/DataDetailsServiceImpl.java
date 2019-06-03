@@ -6,6 +6,7 @@ import cn.kungreat.bbs.mapper.*;
 import cn.kungreat.bbs.query.DataDetailsQuery;
 import cn.kungreat.bbs.service.DataDetailsService;
 import cn.kungreat.bbs.service.DataPostsService;
+import cn.kungreat.bbs.service.UserService;
 import cn.kungreat.bbs.vo.QueryResult;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class DataDetailsServiceImpl implements DataDetailsService {
     private DataPostsService dataPostsService;
     @Autowired
     private DataDetailsRecordMapper dataDetailsRecordMapper;
+    @Autowired
+    private UserService userService;
     @Transactional
     public long insert(DataDetails record) {
         Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
@@ -35,6 +38,8 @@ public class DataDetailsServiceImpl implements DataDetailsService {
         record.setAccount(account);
         record.setPublishTime(new Date());
         dataDetailsMapper.insert(record);
+        int i = userService.updateAccumulatePoints(10, account);
+        Assert.isTrue(i>0,"并发修改错误,请重新提交");
         DataPosts dataPosts = dataPostsMapper.selectByPrimaryKey(record.getPostsId());
         Assert.isTrue(dataPosts!=null,"数据异常");
         dataPosts.setReplyTimeEnd(new Date());
