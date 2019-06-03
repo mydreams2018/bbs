@@ -32,6 +32,7 @@ public class User {
     private Date registerTime;
     private String icon="/userImg/bbsIcon/defaultMember.gif";
     private Integer registerYear ;
+    private Integer accumulatePoints=0;
     public String validMessage(){
         StringBuilder builder = new StringBuilder();
         if(StringUtils.isEmpty(account) || account.length() < 6){

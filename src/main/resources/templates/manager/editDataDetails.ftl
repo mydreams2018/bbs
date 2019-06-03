@@ -216,6 +216,7 @@
                             <img class="card-img-top img-fluid" style="padding: 10px" src="${(postsUsers[data_index].img)!}" alt="kun">
                             <div class="card-body">
                                 <h5 class="card-title">${(postsUsers[data_index].account)!}</h5>
+                                <h5 class="card-title">积分:${(postsUsers[data_index].accumulatePoints)!0}</h5>
                                 <p class="card-text">${(postsUsers[data_index].description)!}</p>
                             </div>
                             <div class="card-footer">
