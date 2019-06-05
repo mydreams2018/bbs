@@ -26,6 +26,7 @@
             });
             $("#zoomify img").zoomify();
             $("#zoomify img").addClass("img-fluid");
+            $("#zoomify iframe").attr("width","92%");
             var current = ${(details.page.currentPage)!};
             var last =  $("#page-last").attr("data-crt");
             var next = $("#page-next").attr("data-crt");
