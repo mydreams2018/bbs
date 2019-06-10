@@ -43,11 +43,11 @@ public class User {
         }
         byte[] bytes = account.getBytes();
         for(int x =0;x<bytes.length;x++){
-            if(bytes[x] > 47 && bytes[x] < 58 || bytes[x] > 64 && bytes[x] < 91
+            if(bytes[x] > 47 && bytes[x] < 58
                     || bytes[x] > 96 && bytes[x] < 123){
 
             }else{
-                builder.append("账户只能是字母和数字");
+                builder.append("账户只能是小写字母和数字");
                 break;
             }
         }
