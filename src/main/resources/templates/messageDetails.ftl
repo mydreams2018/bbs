@@ -192,7 +192,7 @@
     <div class="row pading30">
         <div class="col-md">
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item"><a class="page-link" id="page-top" data-crt="1" href="javascript:pageChange(${(details.page.topPage)!0})">首页</a></li>
                     <li class="page-item"><a class="page-link" id="page-last" data-crt="${(details.page.lastPage)!0}" href="javascript:pageChange(${(details.page.lastPage)!0})">上一页</a></li>
                     <li class="page-item"><a class="page-link" id="page-next" data-crt="${(details.page.nextPage)!0}" href="javascript:pageChange(${(details.page.nextPage)!0})">下一页</a></li>
