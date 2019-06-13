@@ -120,10 +120,10 @@
         </div>
     </div>
 
-    <div class="row pading30 justify-content-center">
-        <div class="col-md-6">
+    <div class="row pading30">
+        <div class="col-md">
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item"><a class="page-link" id="page-top" data-crt="1" href="javascript:pageChange('page-top')">首页</a></li>
                     <li class="page-item"><a class="page-link" id="page-last" href="javascript:pageChange('page-last')">上一页</a></li>
                     <li class="page-item"><a class="page-link" id="page-next" href="javascript:pageChange('page-next')">下一页</a></li>

@@ -93,7 +93,7 @@
     </div>
 </header>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center container-fluid">
     <div class="col-md-3">
         <form action="/defaultLogin" method="post" id="sign_in">
             <div class="form-group">

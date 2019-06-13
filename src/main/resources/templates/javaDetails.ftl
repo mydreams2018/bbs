@@ -184,6 +184,8 @@
     </div>
 </header>
 
+<div class="container-fluid">
+
 <div class="row justify-content-center">
     <div class="col-md-8 text-center">
         <h1 style="color: #ff5479">${(posts.postsName)!}</h1>
@@ -311,10 +313,10 @@
     </div>
 </#if>
 
-<div class="row pading30 justify-content-end">
-    <div class="col-md-6">
+<div class="row pading30">
+    <div class="col-md">
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
+            <ul class="pagination justify-content-center">
                 <li class="page-item"><a class="page-link" id="page-top"  data-crt="1" href="javascript:pageChange('page-top')">首页</a></li>
                 <li class="page-item"><a class="page-link" id="page-last" data-crt="${(details.page.lastPage)!}" href="javascript:pageChange('page-last')">上一页</a></li>
                 <li class="page-item"><a class="page-link" id="page-next" data-crt="${(details.page.nextPage)!}" href="javascript:pageChange('page-next')">下一页</a></li>
@@ -326,5 +328,6 @@
     </div>
 </div>
 
+</div>
 </body>
 </html>
