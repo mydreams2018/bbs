@@ -51,6 +51,9 @@ public class User {
                 break;
             }
         }
+        if(bytes.length > 12){
+            builder.append("账户长度不能大过12");
+        }
         return builder.toString();
     }
 }
