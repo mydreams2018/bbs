@@ -41,10 +41,6 @@
                 type: form.attr("method"),
                 data: form.serialize(),
                 dataType: "json",
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
                 success: function (data) {
                     if(data.result){
                         window.location.replace(data.path);
