@@ -1,5 +1,6 @@
 package cn.kungreat.bbs.service.impl;
 
+import cn.kungreat.bbs.customimg.PortsCache;
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.JavaPosts;
 import cn.kungreat.bbs.mapper.JavaDetailsMapper;
@@ -38,10 +39,12 @@ public class JavaPostsServiceImpl implements JavaPostsService {
         javaPostsMapper.deleteByPrimaryKey(id);
         JavaDetailsQuery javaDetailsQuery = new JavaDetailsQuery();
         javaDetailsQuery.setPostsId(id);
+        //清掉缓存
+        PortsCache.deleteJavaCache(id);
         return javaDetailsMapper.deleteAll(javaDetailsQuery);
     }
 
-    //要权限控制
+    //要权限控制  没有启用
     @Transactional
     public int deleteByAccount(String account) {
         javaPostsMapper.deleteByAccount(account);
@@ -116,6 +119,8 @@ public class JavaPostsServiceImpl implements JavaPostsService {
         javaDetails.setUpdateTime(date);
         javaDetails.setPostsId(javaPosts.getId());
         javaDetails.setDetailData(record.getDetailData());
+        //清掉缓存
+        PortsCache.deleteJavaCache(javaPosts.getId());
         return javaDetailsMapper.updateForPosts(javaDetails);
     }
 

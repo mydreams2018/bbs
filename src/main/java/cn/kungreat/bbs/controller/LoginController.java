@@ -2,6 +2,7 @@ package cn.kungreat.bbs.controller;
 
 import cn.kungreat.bbs.domain.User;
 import cn.kungreat.bbs.service.UserService;
+import cn.kungreat.bbs.util.UserContext;
 import cn.kungreat.bbs.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ public class LoginController {
 
     @RequestMapping(value = "/index")
     public String index(){
+        if(UserContext.getCurrentName() != null && !"".equals(UserContext.getCurrentName())){
+            return "redirect:/home.html";
+        }
         return "login";
     }
 

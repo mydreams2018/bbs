@@ -1,5 +1,6 @@
 package cn.kungreat.bbs.service.impl;
 
+import cn.kungreat.bbs.customimg.PortsCache;
 import cn.kungreat.bbs.domain.JavaDetails;
 import cn.kungreat.bbs.domain.JavaPosts;
 import cn.kungreat.bbs.mapper.JavaDetailsMapper;
@@ -46,10 +47,12 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         Assert.isTrue(javaPosts!=null,"数据异常");
         javaPosts.setReplyTimeEnd(new Date());
         javaPosts.setReplyTotal(javaPosts.getReplyTotal() + 1);
+        //删除缓存
+        PortsCache.deleteJavaCache(record.getPostsId());
         return javaPostsMapper.updateByReply(javaPosts);
     }
 
-    //  用户名AND主贴ID 删除指定用户下指定贴子所有回贴 并减掉回贴数量 要权限控制
+    //  用户名AND主贴ID 删除指定用户下指定贴子所有回贴 并减掉回贴数量 要权限控制 没有启用
     @Transactional
     public int deleteAll(JavaDetailsQuery query) {
         Assert.isTrue(!StringUtils.isEmpty(query.getPostsId().toString())
@@ -73,6 +76,8 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
             javaDetailsRecordMapper.deleteByDeatilsId(PrimaryId);
             subtractReply(1, javaDetails.getPostsId());
         }
+        //清掉缓存
+        PortsCache.deleteJavaCache(javaDetails.getPostsId());
         return 1;
     }
 
@@ -96,6 +101,8 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         Assert.isTrue(StringUtils.isEmpty(record.validMessage()),record.validMessage());
         javaDetails.setUpdateTime(new Date());
         javaDetails.setDetailData(record.getDetailData());
+        //清掉缓存
+        PortsCache.deleteJavaCache(record.getPostsId());
         return javaDetailsMapper.updateByPrimaryId(javaDetails);
     }
 
@@ -112,6 +119,10 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
     @Override
     public QueryResult selectByPostsId(JavaDetailsQuery query) {
         Assert.isTrue(!StringUtils.isEmpty(query.getPostsId().toString()),"查询必要条件为空");
+        QueryResult javaCache = PortsCache.getJavaCache(query.getPostsId(),query.getCurrentPage());
+        if(javaCache != null){
+            return javaCache;
+        }
         long count = javaDetailsMapper.selectCount(query);
         List list  = Collections.emptyList();
         if (count >  0){
@@ -121,6 +132,9 @@ public class JavaDetailsServiceImpl implements JavaDetailsService {
         QueryResult  result = new QueryResult();
         result.setDatas(list);
         result.setPage(query);
+        if(count > 0){
+            PortsCache.setJavaCache(query.getPostsId(),query.getCurrentPage(),result);
+        }
         return result;
     }
 
