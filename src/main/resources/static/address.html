@@ -87,7 +87,7 @@
     }
     function createMap(){
         map = new BMap.Map("map");
-        map.centerAndZoom(new BMap.Point(113.408758,23.172395),17);
+        map.centerAndZoom(new BMap.Point(112.277112,31.785404),14);
     }
     function setMapEvent(){
         map.enableScrollWheelZoom();
@@ -102,6 +102,7 @@
     }
     function addMapOverlay(){
         var markers = [
+            {content:"",title:"家乡",imageOffset: {width:0,height:3},position:{lat:31.809464,lng:112.275531}}
         ];
         for(var index = 0; index < markers.length; index++ ){
             var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
