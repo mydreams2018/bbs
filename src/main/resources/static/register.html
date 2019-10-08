@@ -11,7 +11,17 @@
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
     <script type="text/javascript">
+        var accept_agreement = 0;
+        function setAgreement() {
+            $('#exampleModalScrollable').modal('hide');
+            accept_agreement=1;
+            setTimeout(check,'600');
+        };
         function check(){
+            if(accept_agreement!=1){
+                $('#exampleModalScrollable').modal('show');
+                return ;
+            }
             var pw1 = $("#inputPassword").val();
             var pw2 = $("#PasswordRepeat").val();
             var account = $("#inputAccount").val();
@@ -115,6 +125,49 @@
             <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">Register in</button>
             <p class="mt-5 mb-3 text-muted text-center"><a href="/home.html">&copy; 首页</a></p>
         </form>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">警告:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                欢迎您加入编程技术参加交流和讨论,为维护网上公共秩序和社会稳定,请您自觉遵守以下条款：<br>
+                　　一、不得利用本站危害国家安全、泄露国家秘密，不得侵犯国家社会集体的和公民的合法权益，不得利用本站制			作、复制和传播下列信息：
+                　　（一）煽动抗拒、破坏宪法和法律、行政法规实施的；
+                　　（二）煽动颠覆国家政权，推翻社会主义制度的；
+                　　（三）煽动分裂国家、破坏国家统一的；
+                　　（四）煽动民族仇恨、民族歧视，破坏民族团结的；
+                　　（五）捏造或者歪曲事实，散布谣言，扰乱社会秩序的；
+                　　（六）宣扬封建迷信、淫秽、色情、赌博、暴力、凶杀、恐怖、教唆犯罪的；
+                　　（七）公然侮辱他人或者捏造事实诽谤他人的，或者进行其他恶意攻击的；
+                　　（八）损害国家机关信誉的；
+                　　（九）其他违反宪法和法律行政法规的；<br>
+                　　二、编程技术删帖、锁帖等各类处罚规则：
+                　　（一）对于有违国家相关法律、法规或是道德准则的帖子，挑衅广大网民感情的，蓄意造谣的予以删除。
+                　　（二）对于恶意损害侮辱国家尊严的，恶意挑衅网友攻击情绪的，使用低俗语言的帖子将全部删除，情节严重者			封锁其ID。
+                　　（三）对于使用污秽ID呢称、或存有争议的ID所发出的帖子将全部删除，并且封锁其ID。
+                　　（四）对于含有人身攻击，恶意攻击侮辱网友的帖子，予以删除。
+                　　（五）对于引起网友长时间争吵的帖子，或是有引发大家谩骂攻击的帖子，为了维护版面的和平以及网友间的友谊，予以删除。
+                　　（六）对于多次重发的帖子，无论是否出自同一网友，予以删除，敬请见谅。
+                　　（七）对于恶意灌水的帖子将会被删除。
+                　　（八）对于严重违反本版规定的网友（如刷版、肆意谩骂、挑动网友情绪等）首先予以警告；若不听劝阻继续违规，版主将封锁其ID，如果情节特别严重的，版主有权在无事先警告的前提下即刻删除其所有发表在本论坛中的帖子。
+                　　（十）一些文章本身没有什么恶意，但是却无意间引起网友们的违规行为，并且发帖人也参与其中的，此类帖子一律被锁。
+                　　（十一）对于那些与版面主题无关，却无恶意的帖子，视情况予以转移或删除。
+                　　（十二）对于网友主动提出要求删除自己的帖子，将被删除。
+                　　（十三）对于某些网友严重违反国家法律，发表不良信息，泄露有关机密，引发社会不安定的行为，除删除贴子			封锁其ID外，将上交公安机关处理。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">拒绝:</button>
+                <button type="button" onclick="setAgreement()" class="btn btn-primary">同意:</button>
+            </div>
+        </div>
     </div>
 </div>
 
