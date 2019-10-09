@@ -167,7 +167,7 @@
     </script>
 </head>
 <body>
-<header class="sticky-top">
+<header class="fixed-top">
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
