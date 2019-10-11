@@ -4,7 +4,7 @@
                 crossDomain: true,
 
 
-
-		     processData: false,
+                    jquery ajax form enctype="multipart/form-data" 上传必用
+		            processData: false,
                     contentType: false,
 

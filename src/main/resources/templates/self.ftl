@@ -18,6 +18,8 @@
                 $.ajax({
                     type: "post",
                     url: "/self/uploadImg",
+                    contentType: false,
+                    processData: false,
                     data: data,
                     dataType: "json",
                     success: function (data) {
