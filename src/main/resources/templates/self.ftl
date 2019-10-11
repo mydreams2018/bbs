@@ -16,6 +16,7 @@
             if(imgPath.length > 0){
                 if(imgPath[0].size > 1048000){
                     alert("图片不能大于1M");
+                    return ;
                 };
                 var data = new FormData(document.getElementById("imgForm"));
                 $.ajax({
