@@ -14,6 +14,9 @@
         function chedkSend() {
             var imgPath = $("#exampleFormControlFile1").prop("files");
             if(imgPath.length > 0){
+                if(imgPath[0].size > 1048000){
+                    alert("图片不能大于1M");
+                };
                 var data = new FormData(document.getElementById("imgForm"));
                 $.ajax({
                     type: "post",
