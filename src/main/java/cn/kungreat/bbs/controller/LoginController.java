@@ -22,6 +22,11 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping
+    public String home(){
+        return "redirect:/home.html";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/register")
     public JsonResult register(User record){
