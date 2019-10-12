@@ -287,8 +287,8 @@
                                     &nbsp; &nbsp;查:
                                 </a>
                                 <div class="collapse" id="collapse${(data.id)!}">
-                                    <div class="card card-body">
-                                        顶:${(sustains)!'无'}
+                                    <div class="text-success">
+                                        顶:${(sustains)!'无'}<br>
                                         踩:${(opposes)!'无'}
                                     </div>
                                 </div>
