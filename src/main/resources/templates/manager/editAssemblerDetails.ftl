@@ -204,9 +204,9 @@
 
 <div class="container-fluid">
 
-<div class="row justify-content-center">
-    <div class="col-md-8 text-center">
-        <h1 style="color: #ff5479">${(posts.postsName)!}</h1>
+<div class="row">
+    <div class="col-md">
+        <h1 class="text-center" style="color: #ff5479">${(posts.postsName)!}</h1>
     </div>
 </div>
 
