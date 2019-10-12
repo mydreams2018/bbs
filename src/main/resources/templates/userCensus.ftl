@@ -102,7 +102,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <select class="nav-item" id="select-type" onchange="selectChange(this)">
+                        <select class="nav-item btn" id="select-type" onchange="selectChange(this)">
                             <option value="">所有类型</option>
                         </select>
                     </ul>
