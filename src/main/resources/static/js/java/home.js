@@ -47,7 +47,7 @@ $(function(){
                         a =  a.next("a");
                         a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                         a.prop("title",datas[x].postsName);
-                        a.text(datas[x].postsName.substring(0,18));
+                        a.text(datas[x].postsName);
                     }
                 }
             }
@@ -68,7 +68,7 @@ $(function(){
                         a =  a.next("a");
                         a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                         a.prop("title",datas[x].postsName);
-                        a.text(datas[x].postsName.substring(0,18));
+                        a.text(datas[x].postsName);
                     }
                 }
             }
@@ -86,23 +86,23 @@ function getDatas(data) {
                 a =  a.next("a");
                 a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                 a.prop("title",datas[x].postsName);
-                a.text(datas[x].postsName.substring(0,18));
+                a.text(datas[x].postsName);
 
                 $("#postsDatas").append($(a).clone());
                 var userMessage =  $(a).clone();
                 userMessage.prop("href","/accountPosts.html?account="+datas[x].account);
                 userMessage.prop("title", datas[x].account);
-                userMessage.text(datas[x].account.substring(0,18) +':'+ new Date(datas[x].publishTime).format("yyyy-MM-dd"));
+                userMessage.text(datas[x].account +':'+ new Date(datas[x].publishTime).format("yyyy-MM-dd"));
                 $("#text-right").append(userMessage);
             }else {
                 var posts = $("#data-a-colne").clone();
                 var userMessage = $("#data-a-colne").clone();
                 posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
                 posts.prop("title", datas[x].postsName);
-                posts.text(datas[x].postsName.substring(0, 18));
+                posts.text(datas[x].postsName);
                 userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
                 userMessage.prop("title", datas[x].account);
-                userMessage.text(datas[x].account.substring(0,18) + ':' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
+                userMessage.text(datas[x].account + ':' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
                 $("#postsDatas").append(posts);
                 $("#text-right").append(userMessage);
             }
@@ -206,10 +206,10 @@ function getCurrentDatas(data) {
             var userMessage = $("#data-a-colne").clone();
             posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
             posts.prop("title", datas[x].postsName);
-            posts.text(datas[x].postsName.substring(0, 18));
+            posts.text(datas[x].postsName);
             userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
             userMessage.prop("title", datas[x].account);
-            userMessage.text(datas[x].account.substring(0, 18) + ':' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
+            userMessage.text(datas[x].account + ':' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
             $("#postsDatas").append(posts);
             $("#text-right").append(userMessage);
         }

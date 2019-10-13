@@ -17,7 +17,7 @@ public class MyConnectionSignUp implements ConnectionSignUp {
 
     @Override
     public String execute(Connection<?> connection) {
-        String s = UUID.randomUUID().toString();
+        String s = UUID.randomUUID().toString().substring(24,35);
         User user = new User();
         user.setAccount(s);
         user.setOriginFrom(connection.getKey().getProviderId());

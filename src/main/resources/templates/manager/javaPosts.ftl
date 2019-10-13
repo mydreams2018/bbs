@@ -110,7 +110,7 @@
                     var posts = $(str);
                     posts.prop("href", "/manager/editJavaDetails?id="+datas[x].id);
                     posts.prop("title", datas[x].postsName);
-                    posts.text(datas[x].postsName.substring(0, 18));
+                    posts.text(datas[x].postsName);
                     $("#postsDatas").append(posts);
                 }
             }
