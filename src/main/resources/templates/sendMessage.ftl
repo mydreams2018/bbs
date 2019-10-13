@@ -80,7 +80,7 @@
                     <div class="form-group row">
                         <label for="staticName" class="col-md-2 col-form-label">用户:</label>
                         <div class="col-md-10">
-                            <input type="text" name="toAccount" readonly class="form-control-plaintext" id="staticName"
+                            <input type="text" name="toAccount" disabled class="form-control-plaintext" id="staticName"
                                    value="${(toUser.account)!'BUG'}">
                         </div>
                     </div>
