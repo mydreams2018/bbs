@@ -78,7 +78,6 @@
 
 <div class="container">
     <div class="form-group">
-        <label for="staticEmail2" class="sr-only"></label>
         <input type="text" name="account" readonly class="form-control-plaintext text-center" id="staticEmail2" value="${account!"BUG"}">
     </div>
     <div class="row">
