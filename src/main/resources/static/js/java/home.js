@@ -47,7 +47,7 @@ $(function(){
                         a =  a.next("a");
                         a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                         a.prop("title",datas[x].postsName);
-                        a.text(datas[x].postsName);
+                        a.text(datas[x].postsName.substring(0,18));
                     }
                 }
             }
@@ -68,7 +68,7 @@ $(function(){
                         a =  a.next("a");
                         a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                         a.prop("title",datas[x].postsName);
-                        a.text(datas[x].postsName);
+                        a.text(datas[x].postsName.substring(0,18));
                     }
                 }
             }
@@ -99,7 +99,7 @@ function getDatas(data) {
                 var userMessage = $("#data-a-colne").clone();
                 posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
                 posts.prop("title", datas[x].postsName);
-                posts.text(datas[x].postsName);
+                posts.text(datas[x].postsName.substring(0,18));
                 userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
                 userMessage.prop("title", datas[x].account);
                 userMessage.text(datas[x].account + ':' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
@@ -206,7 +206,7 @@ function getCurrentDatas(data) {
             var userMessage = $("#data-a-colne").clone();
             posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
             posts.prop("title", datas[x].postsName);
-            posts.text(datas[x].postsName);
+            posts.text(datas[x].postsName.substring(0,18));
             userMessage.prop("href", "/accountPosts.html?account="+datas[x].account);
             userMessage.prop("title", datas[x].account);
             userMessage.text(datas[x].account + ':' + new Date(datas[x].publishTime).format("yyyy-MM-dd"));
