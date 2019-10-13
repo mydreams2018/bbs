@@ -3,6 +3,7 @@ package cn.kungreat.bbs.service.impl;
 import cn.kungreat.bbs.domain.PermissionMapping;
 import cn.kungreat.bbs.mapper.PermissionMappingMapper;
 import cn.kungreat.bbs.service.PermissionMappingService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ public class PermissionMappingServiceImpl implements PermissionMappingService {
     public int insertBatch(List<String> record,String account) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Assert.isTrue(manager.contains(name),"没有权限访问");
+        Assert.isTrue(StringUtils.isNotEmpty(account),"没有用户");
         permissionMappingMapper.deleteByAccount(account);
         if(record ==null || record.size() < 1){
             return 0;

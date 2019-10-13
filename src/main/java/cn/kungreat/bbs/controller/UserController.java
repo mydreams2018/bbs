@@ -7,6 +7,7 @@ import cn.kungreat.bbs.service.PermissionService;
 import cn.kungreat.bbs.service.UserService;
 import cn.kungreat.bbs.vo.JsonResult;
 import cn.kungreat.bbs.vo.QueryResult;
+import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,8 +65,12 @@ public class UserController {
     public JsonResult savePermissions(String account,String listPermission){
         JsonResult jsonResult = new JsonResult();
         try {
-            String[] st = listPermission.trim().split(",");
-            permissionMappingService.insertBatch(Arrays.asList(st),account);
+            if(StringUtils.isEmpty(listPermission)){
+                permissionMappingService.insertBatch(null,account);
+            }else{
+                String[] st = listPermission.trim().split(",");
+                permissionMappingService.insertBatch(Arrays.asList(st),account);
+            }
             jsonResult.setMessage("success");
         }catch (Exception e){
             jsonResult.setMessage(e.getMessage());
