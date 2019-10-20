@@ -27,6 +27,7 @@ $(function(){
     $.ajax({
         url: "/assemblerPosts/selectAll",
         type: "post",
+        data: {"pageSize":20},
         dataType: "json",
         success: function (data) {
             getDatas(data);
@@ -140,6 +141,7 @@ function pageChange(obj) {
             type: "post",
             dataType: "json",
             data: {"currentPage":currentPage,
+                    "pageSize":20,
                     "orderField":orderField,
                     "category":category,
                     "searchKeyword":searchKeyword
@@ -181,6 +183,7 @@ function sendAjax() {
         type: "post",
         dataType: "json",
         data: { "orderField":orderField,
+            "pageSize":20,
             "category":category,
             "searchKeyword":searchKeyword
         },

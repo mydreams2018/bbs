@@ -27,6 +27,7 @@ $(function(){
     $.ajax({
         url: "/javaPosts/selectAll",
         type: "post",
+        data: {"pageSize":20},
         dataType: "json",
         success: function (data) {
             getDatas(data);
@@ -140,6 +141,7 @@ function pageChange(obj) {
             type: "post",
             dataType: "json",
             data: {"currentPage":currentPage,
+                    "pageSize":20,
                     "orderField":orderField,
                     "category":category,
                     "searchKeyword":searchKeyword
@@ -182,6 +184,7 @@ function sendAjax() {
         dataType: "json",
         data: { "orderField":orderField,
             "category":category,
+            "pageSize":20,
             "searchKeyword":searchKeyword
         },
         beforeSend: function () {
