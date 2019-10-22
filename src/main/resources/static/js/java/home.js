@@ -87,17 +87,24 @@ function getDatas(data) {
                 a =  a.next("a");
                 a.prop("href","/javaPosts/javaDetails?id="+datas[x].id);
                 a.prop("title",datas[x].postsName);
-                a.text(datas[x].postsName);
+                a.text(datas[x].postsName.substring(0,18));
 
-                $("#postsDatas").append($(a).clone());
+                var posts = $(a).clone();
+                $("#postsDatas").append(posts);
                 var userMessage =  $(a).clone();
+                if(x==0){
+                    posts.removeAttr("id");
+                    userMessage.removeAttr("id");
+                }
                 userMessage.prop("href","/accountPosts.html?account="+datas[x].account);
                 userMessage.prop("title", datas[x].account);
                 userMessage.text(datas[x].account +':'+ new Date(datas[x].publishTime).format("yyyy-MM-dd"));
                 $("#text-right").append(userMessage);
             }else {
                 var posts = $("#data-a-colne").clone();
+                posts.removeAttr("id");
                 var userMessage = $("#data-a-colne").clone();
+                userMessage.removeAttr("id");
                 posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
                 posts.prop("title", datas[x].postsName);
                 posts.text(datas[x].postsName.substring(0,18));
@@ -206,7 +213,9 @@ function getCurrentDatas(data) {
         var datas = data.datas;
         for (x = 0; x < datas.length; x++){
             var posts = $("#data-a-colne").clone();
+            posts.removeAttr("id");
             var userMessage = $("#data-a-colne").clone();
+            userMessage.removeAttr("id");
             posts.prop("href", "/javaPosts/javaDetails?id="+datas[x].id);
             posts.prop("title", datas[x].postsName);
             posts.text(datas[x].postsName.substring(0,18));
