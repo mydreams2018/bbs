@@ -234,7 +234,7 @@
             <a href="#">Back to top</a>
         </p>
         <p>这是一个由程序员编写的交流社区 &copy; DeathWater 开发的</p>
-        <p>粤ICP备19055569号</p>
+        <a href="http://www.beian.miit.gov.cn/" target="_blank">粤ICP备19055569号-1</a>
     </div>
 </footer>
 
