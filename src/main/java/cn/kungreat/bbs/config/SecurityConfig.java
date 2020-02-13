@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/favicon.ico","/register.html","/home.html","/accountReplyPosts.html",
                 "/address.html","/out.html","/java.html","/accountPosts.html","/javaPosts/javaDetails","/assemblerPosts/details","/dataPosts/details","/image",
                 "/","/index","/register", "/postsCategory/list","/javaPosts/selectAll","/assemblerPosts/selectAll","/dataPosts/selectAll","/javaDetails/selectReply","/dataDetails/selectReply","/assemblerDetails/selectReply",
-                "/userImg/**","/summernote/**","/css/**","/js/**","/assembler/**","/data/**");
+                "/userImg/**","/summernote/**","/css/**","/js/**","/assembler/**","/data/**","/games/**");
     }
 
     @Override
