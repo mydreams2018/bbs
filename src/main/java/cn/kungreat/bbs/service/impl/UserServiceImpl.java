@@ -53,12 +53,10 @@ public class UserServiceImpl implements UserService {
             if(accounts.get(x) instanceof JavaDetails){
                 JavaDetails javaDetails =(JavaDetails) accounts.get(x);
                 account = javaDetails.getAccount();
-            }
-            if(accounts.get(x) instanceof AssemblerDetails){
+            } else if(accounts.get(x) instanceof AssemblerDetails){
                 AssemblerDetails assemblerDetails = (AssemblerDetails) accounts.get(x);
                 account =assemblerDetails.getAccount();
-            }
-            if(accounts.get(x) instanceof DataDetails){
+            } else if(accounts.get(x) instanceof DataDetails){
                 DataDetails dataDetails = (DataDetails) accounts.get(x);
                 account =dataDetails.getAccount();
             }
