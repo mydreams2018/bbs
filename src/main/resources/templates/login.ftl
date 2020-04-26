@@ -89,39 +89,41 @@
     </div>
 </header>
 
-<div class="row justify-content-center container-fluid">
-    <div class="col-md-3">
-        <form action="/defaultLogin" method="post" id="sign_in">
-            <div class="form-group">
-                <label for="inputAccount">Account</label>
-                <input type="text" id="inputAccount" name="username" class="form-control" placeholder="Account" required autofocus>
-            </div>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <form action="/defaultLogin" method="post" id="sign_in">
+                <div class="form-group">
+                    <label for="inputAccount">Account</label>
+                    <input type="text" id="inputAccount" name="username" class="form-control" placeholder="Account" required autofocus>
+                </div>
 
-            <div class="form-group">
-                <label for="inputPassword">Password</label>
-                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-            </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                </div>
 
-            <div class="form-group">
-                <label for="inputImageCode">Code</label>
-                <input type="text" id="inputImageCode" name="img-code" class="form-control" placeholder="img-code" required>
-            </div>
+                <div class="form-group">
+                    <label for="inputImageCode">Code</label>
+                    <input type="text" id="inputImageCode" name="img-code" class="form-control" placeholder="img-code" required>
+                </div>
 
-            <div class="form-group">
-                <img src="/image" onclick="flushImg(this)" class="img-fluid">
-            </div>
+                <div class="form-group">
+                    <img src="/image" onclick="flushImg(this)" class="img-fluid">
+                </div>
 
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">Sign in</button>
-            <button class="btn btn-lg btn-primary btn-block" type="button" id="join_as">Join as</button>
-            <button class="btn btn-lg btn-primary btn-block" type="button" onclick="qqLogin()" >
-                <img class="img-fluid" src="/userImg/qq.png" style="height: 32px">
-            </button>
-        </form>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check()">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="join_as">Join as</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="qqLogin()" >
+                    <img class="img-fluid" src="/userImg/qq.png" style="height: 32px">
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 
