@@ -44,7 +44,7 @@ public class DataDetailsController {
         model.addAttribute("detail", dataDetails);
         if(dataDetails.getIsPosts() == 1){
             DataPosts dataPosts = dataPostsService.selectByPrimaryKey(dataDetails.getPostsId());
-            model.addAttribute("categorys",postsCategoryService.selectAll(1));
+            model.addAttribute("categorys",postsCategoryService.selectAll(3));
             model.addAttribute("posts",dataPosts);
             return "updateDataPosts";
         }
